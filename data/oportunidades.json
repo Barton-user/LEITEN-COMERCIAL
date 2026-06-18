@@ -1,0 +1,1626 @@
+[
+{
+"id": 1,
+"nombre": "Plancha para Obra Gallardo",
+"empresa": "Leiten",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "prospecto",
+"valor": 150000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "PRO ENERGIA SRL",
+"obra": "Complejo Pilar",
+"contacto": "Valeria Gómez",
+"vendedor": "Cristian Fabian Mamani",
+"sucursal": "Tucuman",
+"cliente_ciclo": "Cliente nuevo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Hormigonera 130L",
+"Plancha Compactadora"
+],
+"fechaCreacion": "2026-04-12",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-26"
+}
+},
+{
+"id": 2,
+"nombre": "Muro para Torre Libertador",
+"empresa": "Sinis",
+"molde": 2,
+"tipo": "Venta",
+"requiereOT": true,
+"estado": "prospecto",
+"valor": 22000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "ESTEBAN FRESCO",
+"obra": "Edificio Alsina",
+"contacto": "Pablo Díaz",
+"vendedor": "Tomas Yanez",
+"sucursal": "Cordoba",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Puntal Telescópico",
+"Muro a Una Cara"
+],
+"fechaCreacion": "2026-04-06",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-15"
+}
+},
+{
+"id": 3,
+"nombre": "Vibrador para Loteo Sur",
+"empresa": "Leiten",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "negociacion",
+"valor": 95000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "NEXO OBRAS Y SERVICIOS SOCIEDAD ANONIMA",
+"obra": "Obra Gallardo",
+"contacto": "Diego Sosa",
+"vendedor": "Agustin Alejandro Parra",
+"sucursal": "Corrientes",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Pisón Vibrante",
+"Plancha Compactadora"
+],
+"fechaCreacion": "2026-04-18",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-18"
+}
+},
+{
+"id": 4,
+"nombre": "Puntal para Obra Gallardo",
+"empresa": "Sinis",
+"molde": 2,
+"tipo": "Venta",
+"requiereOT": true,
+"estado": "relevado",
+"valor": 15000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "PHB Premoldeados",
+"obra": "Edificio Alsina",
+"contacto": "Lucía Fernández",
+"vendedor": "Yair Tormakh",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Puntal Telescópico",
+"Encofrado Columna Encomax"
+],
+"fechaCreacion": "2026-05-14",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-23"
+}
+},
+{
+"id": 5,
+"nombre": "Barras para Ampliación Planta",
+"empresa": "Barton",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "negociacion",
+"valor": 150000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "LUCNI SA",
+"obra": "Barrio Privado Norte",
+"contacto": "Lucía Fernández",
+"vendedor": "Leonel Santa Maria",
+"sucursal": "Cordoba",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Andamio Modular",
+"Barras Fibra de Vidrio"
+],
+"fechaCreacion": "2026-05-23",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-17"
+}
+},
+{
+"id": 6,
+"nombre": "Vibrador para Barrio Privado Norte",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "ganada",
+"valor": 8000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": true,
+"cliente": "Dorelia Bettina Bueno",
+"obra": "Ampliación Planta",
+"contacto": "Lucía Fernández",
+"vendedor": "Patricio Keogan",
+"sucursal": "Mercado Libre",
+"cliente_ciclo": "Cliente nuevo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Vibrador Enar M5AFP",
+"Plancha Compactadora"
+],
+"fechaCreacion": "2026-05-17",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-19"
+}
+},
+{
+"id": 7,
+"nombre": "Vibrador para Complejo Pilar",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "negociacion",
+"valor": 150000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": true,
+"cliente": "FED AND VEL SA",
+"obra": "Obra Pública Vial",
+"contacto": "Valeria Gómez",
+"vendedor": "Hernan Quinteros",
+"sucursal": "Cordoba",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Vibrador Enar M5AFP",
+"Hormigonera 130L"
+],
+"fechaCreacion": "2026-06-08",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-23"
+}
+},
+{
+"id": 8,
+"nombre": "Barras para Barrio Privado Norte",
+"empresa": "Barton",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "ganada",
+"valor": 48000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "CLUB DE CAMPO VALLE ESCONDIDO",
+"obra": "Barrio Privado Norte",
+"contacto": "Carlos Méndez",
+"vendedor": "Marcela Sanchez",
+"sucursal": "Salta",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Para validar",
+"productos": [
+"Andamio Modular",
+"Conectores"
+],
+"fechaCreacion": "2026-05-02",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-16"
+}
+},
+{
+"id": 9,
+"nombre": "Torre para Obra Gallardo",
+"empresa": "Sinis",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 5000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": true,
+"cliente": "ERCIO RAMON MATIAUDA VERON",
+"obra": "Ampliación Planta",
+"contacto": "María López",
+"vendedor": "Jhordi Albines Guevara",
+"sucursal": "Buenos Aires OT",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Para validar",
+"productos": [
+"Torre de Carga",
+"Encofrado Columna Encomax"
+],
+"fechaCreacion": "2026-06-11",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-19"
+}
+},
+{
+"id": 10,
+"nombre": "Vibrador para Complejo Pilar",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "relevado",
+"valor": 48000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "GRAZIANO JUAN CARLOS",
+"obra": "Edificio Centro",
+"contacto": "Lucía Fernández",
+"vendedor": "Yair Tormakh",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Hormigonera 130L",
+"Pisón Vibrante"
+],
+"fechaCreacion": "2026-03-23",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-18"
+}
+},
+{
+"id": 11,
+"nombre": "Puntal para Barrio Privado Norte",
+"empresa": "Sinis",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "ganada",
+"valor": 150000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": true,
+"cliente": "SUAREZ FILABE S.A.",
+"obra": "Loteo Sur",
+"contacto": "Carlos Méndez",
+"vendedor": "Gabriel Carrera",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Puntal Telescópico",
+"Torre de Carga"
+],
+"fechaCreacion": "2026-06-10",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-21"
+}
+},
+{
+"id": 12,
+"nombre": "Puntal para Edificio Alsina",
+"empresa": "Sinis",
+"molde": 2,
+"tipo": "Venta",
+"requiereOT": true,
+"estado": "desglose",
+"valor": 8000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "INSA SA BASAA SA UP N 29 MELCHOR ROMERO - UTE",
+"obra": "Complejo Pilar",
+"contacto": "Jorge Ruiz",
+"vendedor": "Jhordi Albines Guevara",
+"sucursal": "Buenos Aires OT",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Encofrado Columna Encomax",
+"Puntal Telescópico"
+],
+"fechaCreacion": "2026-06-05",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-27"
+}
+},
+{
+"id": 13,
+"nombre": "Puntal para Complejo Pilar",
+"empresa": "Sinis",
+"molde": 4,
+"tipo": "Alquiler",
+"requiereOT": true,
+"estado": "estimativo",
+"valor": 48000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "MINERA MARIMARI SA",
+"obra": "Obra Pública Vial",
+"contacto": "María López",
+"vendedor": "Juan Ignacio Sbrocco",
+"sucursal": "Salta",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Viga H20",
+"Torre de Carga"
+],
+"fechaCreacion": "2026-05-05",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-26"
+}
+},
+{
+"id": 14,
+"nombre": "Plancha para Ampliación Planta",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "relevado",
+"valor": 60000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "Marcelo Tolaba",
+"obra": "Ampliación Planta",
+"contacto": "Diego Sosa",
+"vendedor": "Juan Ignacio Sbrocco",
+"sucursal": "Salta",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Omitir validación",
+"productos": [
+"Hormigonera 130L",
+"Plancha Compactadora"
+],
+"fechaCreacion": "2026-04-28",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-14"
+}
+},
+{
+"id": 15,
+"nombre": "Torre para Torre Libertador",
+"empresa": "Sinis",
+"molde": 2,
+"tipo": "Venta",
+"requiereOT": true,
+"estado": "ganada",
+"valor": 22000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": true,
+"cliente": "EMANUEL MAXIMILIANO  GAMBOA",
+"obra": "Nave Industrial Ruta 8",
+"contacto": "Valeria Gómez",
+"vendedor": "Gabriel Barbieri",
+"sucursal": "Santa Fe",
+"cliente_ciclo": "En riesgo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Viga H20",
+"Muro a Una Cara"
+],
+"fechaCreacion": "2026-05-25",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-29"
+}
+},
+{
+"id": 16,
+"nombre": "Encofrado para Loteo Sur",
+"empresa": "Sinis",
+"molde": 2,
+"tipo": "Venta",
+"requiereOT": true,
+"estado": "relev_tec",
+"valor": 12000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "SARROUF ZOGBE RAMON HORACIO",
+"obra": "Edificio Centro",
+"contacto": "Diego Sosa",
+"vendedor": "Sebastian Puca",
+"sucursal": "Tucuman",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Muro a Una Cara",
+"Torre de Carga"
+],
+"fechaCreacion": "2026-06-13",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-18"
+}
+},
+{
+"id": 17,
+"nombre": "Vibrador para Ampliación Planta",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "ganada",
+"valor": 8000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "MAK DESARROLLOS SRL",
+"obra": "Ampliación Planta",
+"contacto": "Pablo Díaz",
+"vendedor": "Martin Walter Farias",
+"sucursal": "Rosario",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Pisón Vibrante",
+"Plancha Compactadora"
+],
+"fechaCreacion": "2026-06-09",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-25"
+}
+},
+{
+"id": 18,
+"nombre": "Viga para Edificio Alsina",
+"empresa": "Sinis",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 15000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "FERRARO MATERIALES SRL",
+"obra": "Torre Libertador",
+"contacto": "Pablo Díaz",
+"vendedor": "Ricardo Gagliardi",
+"sucursal": "Rosario",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Torre de Carga",
+"Muro a Una Cara"
+],
+"fechaCreacion": "2026-06-09",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-27"
+}
+},
+{
+"id": 19,
+"nombre": "Vibrador para Ampliación Planta",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "ganada",
+"valor": 12000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": false,
+"cliente": "MANUEL LUIS CUADRADO SA",
+"obra": "Obra Gallardo",
+"contacto": "María López",
+"vendedor": "Agustin Alejandro Parra",
+"sucursal": "Corrientes",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Plancha Compactadora",
+"Hormigonera 130L"
+],
+"fechaCreacion": "2026-05-30",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-12"
+}
+},
+{
+"id": 20,
+"nombre": "Pisón para Ampliación Planta",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "ganada",
+"valor": 150000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "CONSTRUCTORA  SAN LUIS SAPAEM",
+"obra": "Obra Gallardo",
+"contacto": "Lucía Fernández",
+"vendedor": "Jose Esteban Rondoletto",
+"sucursal": "Cordoba",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Para validar",
+"productos": [
+"Hormigonera 130L",
+"Pisón Vibrante"
+],
+"fechaCreacion": "2026-03-30",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-24"
+}
+},
+{
+"id": 21,
+"nombre": "Barras para Obra Gallardo",
+"empresa": "Barton",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "interes",
+"valor": 12000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "QUEIRON SRL",
+"obra": "Ampliación Planta",
+"contacto": "Pablo Díaz",
+"vendedor": "Lucas Bustos",
+"sucursal": "Neuquen",
+"cliente_ciclo": "En riesgo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Andamio Modular",
+"Conectores"
+],
+"fechaCreacion": "2026-06-13",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-27"
+}
+},
+{
+"id": 22,
+"nombre": "Vibrador para Edificio Centro",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "prospecto",
+"valor": 60000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "DUROCRET SA",
+"obra": "Torre Libertador",
+"contacto": "María López",
+"vendedor": "Leandro Schmidt",
+"sucursal": "Mendoza",
+"cliente_ciclo": "Activo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Vibrador Enar M5AFP",
+"Hormigonera 130L"
+],
+"fechaCreacion": "2026-04-10",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-17"
+}
+},
+{
+"id": 23,
+"nombre": "Hormigonera para Obra Gallardo",
+"empresa": "Leiten",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "interes",
+"valor": 150000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": true,
+"cliente": "PEDRO WEIDMANN",
+"obra": "Obra Gallardo",
+"contacto": "Pablo Díaz",
+"vendedor": "AdmVentas Administracion de Ventas",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "En riesgo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Vibrador Enar M5AFP",
+"Pisón Vibrante"
+],
+"fechaCreacion": "2026-03-24",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-15"
+}
+},
+{
+"id": 24,
+"nombre": "Torre para Edificio Alsina",
+"empresa": "Sinis",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "prospecto",
+"valor": 5000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": true,
+"cliente": "ADN DEVELOPERS SRL",
+"obra": "Edificio Alsina",
+"contacto": "Diego Sosa",
+"vendedor": "Alejandro Torres",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Para validar",
+"productos": [
+"Torre de Carga",
+"Viga H20"
+],
+"fechaCreacion": "2026-06-13",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-20"
+}
+},
+{
+"id": 25,
+"nombre": "Hormigonera para Barrio Privado Norte",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "interes",
+"valor": 35000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "VER TECH CONSTRUCCIONES Y SERVICIOS S.R.L",
+"obra": "Obra Pública Vial",
+"contacto": "Carlos Méndez",
+"vendedor": "Yonathan Pujol Rico",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Cliente nuevo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Pisón Vibrante",
+"Cortadora de Hierro"
+],
+"fechaCreacion": "2026-05-04",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-22"
+}
+},
+{
+"id": 26,
+"nombre": "Vibrador para Loteo Sur",
+"empresa": "Leiten",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "interes",
+"valor": 12000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": false,
+"cliente": "MZ ARQUITECTURA Y DISENO SRL",
+"obra": "Complejo Pilar",
+"contacto": "Lucía Fernández",
+"vendedor": "Agustin Alejandro Parra",
+"sucursal": "Corrientes",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Plancha Compactadora",
+"Cortadora de Hierro"
+],
+"fechaCreacion": "2026-03-28",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-12"
+}
+},
+{
+"id": 27,
+"nombre": "Pisón para Edificio Alsina",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "ganada",
+"valor": 35000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "FIDEICOMISO PALMERA GOLF",
+"obra": "Edificio Centro",
+"contacto": "María López",
+"vendedor": "Hernan Guillen",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Activo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Cortadora de Hierro",
+"Plancha Compactadora"
+],
+"fechaCreacion": "2026-03-24",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-12"
+}
+},
+{
+"id": 28,
+"nombre": "Viga para Obra Pública Vial",
+"empresa": "Sinis",
+"molde": 4,
+"tipo": "Alquiler",
+"requiereOT": true,
+"estado": "ganada",
+"valor": 60000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "NEMAK ARGENTINA SRL.",
+"obra": "Loteo Sur",
+"contacto": "Carlos Méndez",
+"vendedor": "Jose Esteban Rondoletto",
+"sucursal": "Cordoba",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Puntal Telescópico",
+"Muro a Una Cara"
+],
+"fechaCreacion": "2026-04-25",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-15"
+}
+},
+{
+"id": 29,
+"nombre": "Vibrador para Edificio Centro",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 60000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "CIERTECHA S.R.L",
+"obra": "Complejo Pilar",
+"contacto": "María López",
+"vendedor": "Alejandro Nasello",
+"sucursal": "Rosario",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Hormigonera 130L",
+"Vibrador Enar M5AFP"
+],
+"fechaCreacion": "2026-04-17",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-17"
+}
+},
+{
+"id": 30,
+"nombre": "Hormigonera para Nave Industrial Ruta 8",
+"empresa": "Leiten",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "prospecto",
+"valor": 35000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "Sebastiao Francisco Javier",
+"obra": "Obra Gallardo",
+"contacto": "Jorge Ruiz",
+"vendedor": "Sebastian Puca",
+"sucursal": "Tucuman",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Cortadora de Hierro",
+"Plancha Compactadora"
+],
+"fechaCreacion": "2026-05-09",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-24"
+}
+},
+{
+"id": 31,
+"nombre": "Viga para Ampliación Planta",
+"empresa": "Sinis",
+"molde": 2,
+"tipo": "Venta",
+"requiereOT": true,
+"estado": "desglose",
+"valor": 120000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "CONSTRUCCIONES LOSCRI Y ASOCIADOS SRL",
+"obra": "Ampliación Planta",
+"contacto": "Diego Sosa",
+"vendedor": "AdmVentas Administracion de Ventas",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Activo",
+"seg_estado": "Para validar",
+"productos": [
+"Puntal Telescópico",
+"Torre de Carga"
+],
+"fechaCreacion": "2026-03-23",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-14"
+}
+},
+{
+"id": 32,
+"nombre": "Cortadora para Barrio Privado Norte",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "prospecto",
+"valor": 120000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "DESARROLLADORA MONTEVERDI SA",
+"obra": "Ampliación Planta",
+"contacto": "Carlos Méndez",
+"vendedor": "Leandro Schmidt",
+"sucursal": "Mendoza",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Pisón Vibrante",
+"Vibrador Enar M5AFP"
+],
+"fechaCreacion": "2026-05-30",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-18"
+}
+},
+{
+"id": 33,
+"nombre": "Torre para Obra Pública Vial",
+"empresa": "Sinis",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "interes",
+"valor": 35000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": true,
+"cliente": "GALLEGO Y SCHUJMAN CONSTRUCTORA SRL",
+"obra": "Edificio Alsina",
+"contacto": "Valeria Gómez",
+"vendedor": "Sebastian Puca",
+"sucursal": "Tucuman",
+"cliente_ciclo": "Activo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Viga H20",
+"Puntal Telescópico"
+],
+"fechaCreacion": "2026-04-08",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-16"
+}
+},
+{
+"id": 34,
+"nombre": "Viga para Nave Industrial Ruta 8",
+"empresa": "Sinis",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 12000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "BERGEL MARCELO",
+"obra": "Obra Gallardo",
+"contacto": "Pablo Díaz",
+"vendedor": "Marcelo Fabian Coria",
+"sucursal": "Santa Fe",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Torre de Carga",
+"Muro a Una Cara"
+],
+"fechaCreacion": "2026-03-29",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-13"
+}
+},
+{
+"id": 35,
+"nombre": "Hormigonera para Edificio Alsina",
+"empresa": "Leiten",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "interes",
+"valor": 35000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "SPIESS HNOS.",
+"obra": "Ampliación Planta",
+"contacto": "Pablo Díaz",
+"vendedor": "Oscar Bianchi",
+"sucursal": "Negocio Tanques",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Hormigonera 130L",
+"Vibrador Enar M5AFP"
+],
+"fechaCreacion": "2026-05-18",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-16"
+}
+},
+{
+"id": 36,
+"nombre": "Vibrador para Loteo Sur",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 35000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "COTO CENTRO INTEGRAL DE COMERCIALIZACION SA",
+"obra": "Complejo Pilar",
+"contacto": "Diego Sosa",
+"vendedor": "Hernan Guillen",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Para validar",
+"productos": [
+"Vibrador Enar M5AFP",
+"Hormigonera 130L"
+],
+"fechaCreacion": "2026-04-24",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-24"
+}
+},
+{
+"id": 37,
+"nombre": "Puntal para Obra Pública Vial",
+"empresa": "Sinis",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "negociacion",
+"valor": 22000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "CABRERA VERA PEDRO ROLANDO",
+"obra": "Edificio Centro",
+"contacto": "Pablo Díaz",
+"vendedor": "Gestion_Rosario Legales",
+"sucursal": "Rosario",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Puntal Telescópico",
+"Torre de Carga"
+],
+"fechaCreacion": "2026-03-22",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-26"
+}
+},
+{
+"id": 38,
+"nombre": "Muro para Ampliación Planta",
+"empresa": "Sinis",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "interes",
+"valor": 120000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "GOLDSTEIN CONSTRUCCIONES SRL",
+"obra": "Edificio Alsina",
+"contacto": "Ana Torres",
+"vendedor": "Alan Sosa",
+"sucursal": "Mendoza",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Viga H20",
+"Muro a Una Cara"
+],
+"fechaCreacion": "2026-05-26",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-15"
+}
+},
+{
+"id": 39,
+"nombre": "Barras para Ampliación Planta",
+"empresa": "Barton",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 35000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": true,
+"cliente": "KLAUS DIEGO ALEJANDRO",
+"obra": "Complejo Pilar",
+"contacto": "Diego Sosa",
+"vendedor": "Guillermo Ruatta",
+"sucursal": "Santa Fe",
+"cliente_ciclo": "Activo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Conectores",
+"Andamio Modular"
+],
+"fechaCreacion": "2026-04-19",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-30"
+}
+},
+{
+"id": 40,
+"nombre": "Andamio para Ampliación Planta",
+"empresa": "Barton",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "interes",
+"valor": 150000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": false,
+"cliente": "Gegam sa",
+"obra": "Edificio Centro",
+"contacto": "Lucía Fernández",
+"vendedor": "Ricardo Gagliardi",
+"sucursal": "Rosario",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Barras Fibra de Vidrio",
+"Andamio Modular"
+],
+"fechaCreacion": "2026-04-15",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-14"
+}
+},
+{
+"id": 41,
+"nombre": "Cortadora para Obra Pública Vial",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 95000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "DOMATO SRL",
+"obra": "Obra Gallardo",
+"contacto": "Jorge Ruiz",
+"vendedor": "Marcelo Fabian Coria",
+"sucursal": "Santa Fe",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Omitir validación",
+"productos": [
+"Plancha Compactadora",
+"Cortadora de Hierro"
+],
+"fechaCreacion": "2026-06-11",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-19"
+}
+},
+{
+"id": 42,
+"nombre": "Vibrador para Ampliación Planta",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "interes",
+"valor": 95000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "DACAR CONSTRUCCIONES S.R.L.",
+"obra": "Loteo Sur",
+"contacto": "Valeria Gómez",
+"vendedor": "Ricardo Gagliardi",
+"sucursal": "Rosario",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Vibrador Enar M5AFP",
+"Cortadora de Hierro"
+],
+"fechaCreacion": "2026-04-23",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-17"
+}
+},
+{
+"id": 43,
+"nombre": "Andamio para Edificio Centro",
+"empresa": "Barton",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "relevado",
+"valor": 120000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": true,
+"cliente": "METROGAS SA",
+"obra": "Torre Libertador",
+"contacto": "María López",
+"vendedor": "Hernan Guillen",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Activo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Andamio Modular",
+"Barras Fibra de Vidrio"
+],
+"fechaCreacion": "2026-06-13",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-17"
+}
+},
+{
+"id": 44,
+"nombre": "Torre para Torre Libertador",
+"empresa": "Sinis",
+"molde": 4,
+"tipo": "Alquiler",
+"requiereOT": true,
+"estado": "ganada",
+"valor": 95000,
+"moneda": "USD",
+"tipoOrigen": "Cliente existente",
+"tuvoDemo": false,
+"cliente": "Vassallo premoldeados",
+"obra": "Edificio Alsina",
+"contacto": "María López",
+"vendedor": "Yair Tormakh",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Viga H20",
+"Encofrado Columna Encomax"
+],
+"fechaCreacion": "2026-04-28",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-21"
+}
+},
+{
+"id": 45,
+"nombre": "Andamio para Barrio Privado Norte",
+"empresa": "Barton",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 12000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "AGENER SRL",
+"obra": "Barrio Privado Norte",
+"contacto": "María López",
+"vendedor": "Alan Sosa",
+"sucursal": "Mendoza",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Andamio Modular",
+"Barras Fibra de Vidrio"
+],
+"fechaCreacion": "2026-04-12",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-30"
+}
+},
+{
+"id": 46,
+"nombre": "Cortadora para Complejo Pilar",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "relevado",
+"valor": 15000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "PETROQUIMICA COMODORO RIVADAVIA SA",
+"obra": "Torre Libertador",
+"contacto": "Diego Sosa",
+"vendedor": "Adrian Rodriguez",
+"sucursal": "Gerencia Mineria",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Omitir validación",
+"productos": [
+"Vibrador Enar M5AFP",
+"Pisón Vibrante"
+],
+"fechaCreacion": "2026-03-28",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-16"
+}
+},
+{
+"id": 47,
+"nombre": "Hormigonera para Loteo Sur",
+"empresa": "Leiten",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "interes",
+"valor": 8000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": true,
+"cliente": "Horacio Crespo",
+"obra": "Nave Industrial Ruta 8",
+"contacto": "María López",
+"vendedor": "Juan Ignacio Sbrocco",
+"sucursal": "Salta",
+"cliente_ciclo": "Activo",
+"seg_estado": "Para validar",
+"productos": [
+"Pisón Vibrante",
+"Hormigonera 130L"
+],
+"fechaCreacion": "2026-04-20",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-20"
+}
+},
+{
+"id": 48,
+"nombre": "Viga para Obra Gallardo",
+"empresa": "Sinis",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "interes",
+"valor": 120000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "ANDINO LEANDRO ARIEL",
+"obra": "Loteo Sur",
+"contacto": "Diego Sosa",
+"vendedor": "Guillermo Ruatta",
+"sucursal": "Santa Fe",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Encofrado Columna Encomax",
+"Viga H20"
+],
+"fechaCreacion": "2026-06-04",
+"proxAct": {
+"tipo": "llamado",
+"fecha": "2026-06-19"
+}
+},
+{
+"id": 49,
+"nombre": "Vibrador para Ampliación Planta",
+"empresa": "Leiten",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "relevado",
+"valor": 15000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": true,
+"cliente": "FORESTAL SAUCE VIEJO S.A.",
+"obra": "Obra Gallardo",
+"contacto": "Ana Torres",
+"vendedor": "Marcelo Fabian Coria",
+"sucursal": "Santa Fe",
+"cliente_ciclo": "En riesgo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Hormigonera 130L",
+"Pisón Vibrante"
+],
+"fechaCreacion": "2026-06-12",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-20"
+}
+},
+{
+"id": 50,
+"nombre": "Torre para Obra Gallardo",
+"empresa": "Sinis",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 22000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": true,
+"cliente": "MINERA DON NICOLAS SA",
+"obra": "Ampliación Planta",
+"contacto": "Jorge Ruiz",
+"vendedor": "Leandro Schmidt",
+"sucursal": "Mendoza",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Omitir validación",
+"productos": [
+"Viga H20",
+"Muro a Una Cara"
+],
+"fechaCreacion": "2026-05-10",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-29"
+}
+},
+{
+"id": 51,
+"nombre": "Muro para Obra Pública Vial",
+"empresa": "Sinis",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 150000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "NF MAQUINARIAS SRL",
+"obra": "Barrio Privado Norte",
+"contacto": "María López",
+"vendedor": "Sebastian Puca",
+"sucursal": "Tucuman",
+"cliente_ciclo": "En riesgo",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Torre de Carga",
+"Muro a Una Cara"
+],
+"fechaCreacion": "2026-05-26",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-16"
+}
+},
+{
+"id": 52,
+"nombre": "Plancha para Loteo Sur",
+"empresa": "Leiten",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "negociacion",
+"valor": 95000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "COHEN JORGE ADRIAN",
+"obra": "Complejo Pilar",
+"contacto": "Pablo Díaz",
+"vendedor": "Gonzalo Gallardo",
+"sucursal": "Corrientes",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Validación aprobada",
+"productos": [
+"Vibrador Enar M5AFP",
+"Pisón Vibrante"
+],
+"fechaCreacion": "2026-05-09",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-21"
+}
+},
+{
+"id": 53,
+"nombre": "Torre para Edificio Alsina",
+"empresa": "Sinis",
+"molde": 3,
+"tipo": "Alquiler",
+"requiereOT": false,
+"estado": "prospecto",
+"valor": 15000,
+"moneda": "USD",
+"tipoOrigen": "Nuevo",
+"tuvoDemo": false,
+"cliente": "EDESTE SA EMPRESA DISTRIBUIDORA DE ELECTRICIDAD DEL ESTE SA",
+"obra": "Loteo Sur",
+"contacto": "Valeria Gómez",
+"vendedor": "AdmVentasMDZ Administracion de Ventas",
+"sucursal": "Mendoza",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Omitir validación",
+"productos": [
+"Encofrado Columna Encomax",
+"Muro a Una Cara"
+],
+"fechaCreacion": "2026-05-23",
+"proxAct": {
+"tipo": "cotizacion",
+"fecha": "2026-06-14"
+}
+},
+{
+"id": 54,
+"nombre": "Conectores para Edificio Alsina",
+"empresa": "Barton",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "cotizacion",
+"valor": 150000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "ESCOBAR AUTOMOTORES SA",
+"obra": "Edificio Alsina",
+"contacto": "Diego Sosa",
+"vendedor": "Guillermo Ruatta",
+"sucursal": "Santa Fe",
+"cliente_ciclo": "En riesgo",
+"seg_estado": "Omitir validación",
+"productos": [
+"Andamio Modular",
+"Conectores"
+],
+"fechaCreacion": "2026-05-29",
+"proxAct": {
+"tipo": "visita_obra",
+"fecha": "2026-06-29"
+}
+},
+{
+"id": 55,
+"nombre": "Conectores para Torre Libertador",
+"empresa": "Barton",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "ganada",
+"valor": 95000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": false,
+"cliente": "AUTOVIA DEL MERCOSUR",
+"obra": "Loteo Sur",
+"contacto": "María López",
+"vendedor": "Juan Manuel Garrido",
+"sucursal": "Buenos Aires",
+"cliente_ciclo": "Inactivo",
+"seg_estado": "Para validar",
+"productos": [
+"Barras Fibra de Vidrio",
+"Andamio Modular"
+],
+"fechaCreacion": "2026-03-28",
+"proxAct": {
+"tipo": "demo",
+"fecha": "2026-06-13"
+}
+},
+{
+"id": 56,
+"nombre": "Encofrado para Barrio Privado Norte",
+"empresa": "Sinis",
+"molde": 1,
+"tipo": "Venta",
+"requiereOT": false,
+"estado": "interes",
+"valor": 48000,
+"moneda": "USD",
+"tipoOrigen": "Reactivación",
+"tuvoDemo": true,
+"cliente": "RIVAROLA FABIAN ALEXIS DAMIAN",
+"obra": "Loteo Sur",
+"contacto": "Ana Torres",
+"vendedor": "Tomas Yanez",
+"sucursal": "Cordoba",
+"cliente_ciclo": "Prospecto",
+"seg_estado": "Omitir validación",
+"productos": [
+"Viga H20",
+"Torre de Carga"
+],
+"fechaCreacion": "2026-04-27",
+"proxAct": {
+"tipo": "reunion",
+"fecha": "2026-06-17"
+}
+}
+]

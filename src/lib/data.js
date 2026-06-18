@@ -215,6 +215,14 @@ export function puntuacionVendedores() {
     .sort((a, b) => (b.final ?? 0) - (a.final ?? 0));
 }
 
+let _ops = null;
+export function getOportunidades() {
+  if (_ops) return _ops;
+  const file = path.join(process.cwd(), "data", "oportunidades.json");
+  _ops = JSON.parse(fs.readFileSync(file, "utf-8"));
+  return _ops;
+}
+
 // Lista de vendedores ordenada con su sucursal
 export function getVendedores() {
   const data = getClientes();

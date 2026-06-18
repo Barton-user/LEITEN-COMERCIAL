@@ -7,10 +7,12 @@ const LINKS = [
   { href: "/segmentacion", label: "Segmentación" },
   { href: "/puntuacion", label: "Puntuación" },
   { href: "/data", label: "Data" },
+  { href: "/vendedor", label: "📱 App Vendedor" },
 ];
 
 export default function Nav() {
   const path = usePathname();
+  if (path && path.startsWith("/vendedor")) return null;
   return (
     <header className="topbar">
       <h1>
