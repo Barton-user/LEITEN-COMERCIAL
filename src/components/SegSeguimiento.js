@@ -3,14 +3,20 @@ import { useEffect, useState, useCallback } from "react";
 
 const PERIODOS = [
   { id: "hoy", label: "Hoy" },
-  { id: "7d", label: "Últimos 7 días" },
-  { id: "14d", label: "Últimos 14 días" },
+  { id: "7d", label: "7 días" },
+  { id: "14d", label: "14 días" },
   { id: "mes", label: "Este mes" },
   { id: "todo", label: "Todo" },
 ];
 
+function avanceColor(pct) {
+  if (pct >= 70) return "#22c55e";
+  if (pct >= 55) return "#f59e0b";
+  return "#ef4444";
+}
+
 export default function SegSeguimiento({ vendedores }) {
-  const [period, setPeriod] = useState("7d");
+  const [period, setPeriod] = useState("14d");
   const [vendedor, setVendedor] = useState("");
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -32,10 +38,11 @@ export default function SegSeguimiento({ vendedores }) {
         json.totals.pendientes = Math.max(0, json.totals.pendientes - n);
         let row = json.porVendedor.find((r) => r.vendedor === v);
         if (!row) {
-          row = { vendedor: v, sucursal: "", validados: 0, pendientes: 0, paraValidar: 0, omitir: 0 };
+          row = { vendedor: v, sucursal: "", validados: 0, validadosTotal: 0, pendientes: 0, paraValidar: 0, omitir: 0 };
           json.porVendedor.push(row);
         }
         row.validados += n;
+        row.validadosTotal += n;
         row.pendientes = Math.max(0, row.pendientes - n);
       }
       json.porVendedor.sort((a, b) => b.validados - a.validados || b.pendientes - a.pendientes);
@@ -50,8 +57,8 @@ export default function SegSeguimiento({ vendedores }) {
   }, [fetchData]);
 
   const t = data?.totals || { validados: 0, pendientes: 0, paraValidar: 0, omitir: 0 };
-  const top = (data?.porVendedor || []).slice(0, 10);
-  const maxV = Math.max(1, ...top.map((r) => r.validados + r.pendientes));
+  const rows = (data?.porVendedor || []).slice(0, 12);
+  const periodLabel = PERIODOS.find((p) => p.id === period).label.toLowerCase();
 
   return (
     <div className="panel-box">
@@ -59,7 +66,7 @@ export default function SegSeguimiento({ vendedores }) {
         <div>
           <h3 style={{ fontSize: 15, marginBottom: 2 }}>Seguimiento de segmentación</h3>
           <span className="muted" style={{ fontSize: 12 }}>
-            Validaciones por vendedor en el período seleccionado.
+            Ranking de vendedores por validaciones en el período.
           </span>
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
@@ -88,7 +95,7 @@ export default function SegSeguimiento({ vendedores }) {
       {/* KPIs */}
       <div className="kpis" style={{ marginBottom: 18 }}>
         <div className="kpi" style={{ borderTopColor: "#22c55e", cursor: "default" }}>
-          <div className="kpi-label" style={{ color: "#22c55e" }}>Validados ({PERIODOS.find((p) => p.id === period).label.toLowerCase()})</div>
+          <div className="kpi-label" style={{ color: "#22c55e" }}>Validados ({periodLabel})</div>
           <div className="kpi-num">{t.validados.toLocaleString("es-AR")}</div>
         </div>
         <div className="kpi" style={{ borderTopColor: "#a855f7", cursor: "default" }}>
@@ -105,42 +112,56 @@ export default function SegSeguimiento({ vendedores }) {
         </div>
       </div>
 
-      {/* Barras */}
+      {/* Leaderboard */}
       {loading ? (
         <div className="loading">Cargando…</div>
-      ) : top.length === 0 ? (
+      ) : rows.length === 0 ? (
         <div className="empty">Sin validaciones ni pendientes en este filtro.</div>
       ) : (
-        <div>
-          <div className="muted" style={{ fontSize: 12, marginBottom: 10, display: "flex", gap: 16 }}>
-            <span><span style={{ color: "#22c55e" }}>■</span> Validados</span>
-            <span><span style={{ color: "#a855f7" }}>■</span> Pendientes de gerencia</span>
-          </div>
-          {top.map((r) => (
-            <div className="barrow" key={r.vendedor}>
-              <div className="barlabel" title={r.vendedor}>
-                {r.vendedor}
-                {r.sucursal && r.sucursal !== "Sin asignar" ? (
-                  <small> · {r.sucursal}</small>
-                ) : null}
-              </div>
-              <div className="bartrack">
-                <div
-                  className="barfill"
-                  style={{ width: `${(r.validados / maxV) * 100}%`, background: "#22c55e" }}
-                />
-                <div
-                  className="barfill"
-                  style={{ width: `${(r.pendientes / maxV) * 100}%`, background: "#a855f7", borderRadius: 0 }}
-                />
-              </div>
-              <div className="barval">{r.validados}</div>
-            </div>
-          ))}
-        </div>
+        <table className="grid lb">
+          <thead>
+            <tr>
+              <th style={{ width: 36 }}>#</th>
+              <th>Vendedor</th>
+              <th className="num">Val.</th>
+              <th className="num">Pend.</th>
+              <th style={{ width: 200 }}>Avance de cartera</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r, idx) => {
+              const denom = r.validadosTotal + r.pendientes + r.paraValidar;
+              const pct = denom ? Math.round((r.validadosTotal / denom) * 100) : 0;
+              const col = avanceColor(pct);
+              return (
+                <tr key={r.vendedor} className={idx === 0 ? "lb-top" : ""}>
+                  <td style={{ fontWeight: 700, color: idx === 0 ? "#22c55e" : "var(--muted)" }}>
+                    {idx + 1}
+                  </td>
+                  <td>
+                    <span style={{ fontWeight: 600 }}>{r.vendedor}</span>
+                    {r.sucursal && r.sucursal !== "Sin asignar" ? (
+                      <span className="muted" style={{ fontSize: 11.5 }}> · {r.sucursal}</span>
+                    ) : null}
+                  </td>
+                  <td className="num" style={{ color: "#22c55e", fontWeight: 700 }}>{r.validados}</td>
+                  <td className="num" style={{ color: "#a855f7", fontWeight: 600 }}>{r.pendientes}</td>
+                  <td>
+                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                      <div className="bartrack" style={{ flex: 1, height: 8 }}>
+                        <div className="barfill" style={{ width: `${pct}%`, background: col }} />
+                      </div>
+                      <span className="muted" style={{ fontSize: 11.5, width: 34, textAlign: "right" }}>{pct}%</span>
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
       )}
       <div className="muted" style={{ fontSize: 11, marginTop: 12 }}>
-        Las fechas de validación son simuladas (mock) hasta conectar la API de segmentación del ERP. Las aprobaciones que hagas en la app cuentan como validadas hoy.
+        “Avance de cartera” = fichas validadas sobre el total a gestionar del vendedor. Las fechas de validación son mock hasta conectar la API del ERP; las aprobaciones que hagas en la app cuentan como validadas hoy.
       </div>
     </div>
   );

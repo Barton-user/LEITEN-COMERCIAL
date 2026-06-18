@@ -68,12 +68,14 @@ export function segSeguimiento({ period = "7d", vendedor = "", sucursal = "" }) 
         vendedor: c.vendedor,
         sucursal: c.sucursal,
         validados: 0,
+        validadosTotal: 0,
         pendientes: 0,
         paraValidar: 0,
         omitir: 0,
       });
     const row = map.get(c.vendedor);
     if (c.segEstado === "Validación aprobada") {
+      row.validadosTotal++;
       if (!cutoff || (c.fechaVal && c.fechaVal >= cutoff)) {
         row.validados++;
         totals.validados++;
