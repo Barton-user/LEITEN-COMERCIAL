@@ -16,6 +16,15 @@ function scoreColor(v) {
   return "#ef4444";
 }
 
+// Medalla según el puntaje promedio (refleja el criterio de antigüedad de "Para validar")
+function nivel(v) {
+  if (v == null) return { icon: "—", label: "Sin fichas", color: "var(--muted)" };
+  if (v >= 8.5) return { icon: "🥇", label: "Muy bueno", color: "#22c55e" };
+  if (v >= 6.5) return { icon: "🥈", label: "Bueno", color: "#84cc16" };
+  if (v >= 3.5) return { icon: "🥉", label: "Regular", color: "#f59e0b" };
+  return { icon: "🚩", label: "Muy malo", color: "#ef4444" };
+}
+
 export default function SegSeguimiento({ vendedores }) {
   const [period, setPeriod] = useState("14d");
   const [vendedor, setVendedor] = useState("");
@@ -95,6 +104,14 @@ export default function SegSeguimiento({ vendedores }) {
         </div>
       </div>
 
+      {/* Leyenda de medallas */}
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap", marginBottom: 12, fontSize: 12 }}>
+        <span><span style={{ fontSize: 15 }}>🥇</span> <b style={{ color: "#22c55e" }}>Muy bueno</b> <span className="muted">≤ 7 días</span></span>
+        <span><span style={{ fontSize: 15 }}>🥈</span> <b style={{ color: "#84cc16" }}>Bueno</b> <span className="muted">≤ 15 días</span></span>
+        <span><span style={{ fontSize: 15 }}>🥉</span> <b style={{ color: "#f59e0b" }}>Regular</b> <span className="muted">15 – 60 días</span></span>
+        <span><span style={{ fontSize: 15 }}>🚩</span> <b style={{ color: "#ef4444" }}>Muy malo</b> <span className="muted">+2 meses</span></span>
+      </div>
+
       {/* Leaderboard */}
       {loading ? (
         <div className="loading">Cargando…</div>
@@ -108,13 +125,14 @@ export default function SegSeguimiento({ vendedores }) {
               <th>Vendedor</th>
               <th className="num">Val.</th>
               <th className="num">Pend.</th>
-              <th style={{ width: 230 }}>Puntaje segmentación</th>
+              <th style={{ width: 250 }}>Puntaje segmentación</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((r, idx) => {
               const score = r.segScore;
               const col = scoreColor(score);
+              const nv = nivel(score);
               return (
                 <tr key={r.vendedor} className={idx === 0 ? "lb-top" : ""}>
                   <td style={{ fontWeight: 700, color: idx === 0 ? "#22c55e" : "var(--muted)" }}>
@@ -129,16 +147,18 @@ export default function SegSeguimiento({ vendedores }) {
                   <td className="num" style={{ color: "#22c55e", fontWeight: 700 }}>{r.validados}</td>
                   <td className="num" style={{ color: "#a855f7", fontWeight: 600 }}>{r.pendientes}</td>
                   <td>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                      <div className="bartrack" style={{ flex: 1, height: 8 }}>
-                        <div
-                          className="barfill"
-                          style={{ width: `${((score ?? 0) / 10) * 100}%`, background: col }}
-                        />
+                    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                      <span style={{ fontSize: 20, lineHeight: 1 }}>{nv.icon}</span>
+                      <div style={{ minWidth: 70 }}>
+                        <div style={{ fontWeight: 700, fontSize: 14, color: col }}>
+                          {score != null ? score.toFixed(1) : "—"}
+                          <span className="muted" style={{ fontSize: 11, fontWeight: 400 }}> /10</span>
+                        </div>
+                        <div style={{ fontSize: 11, color: nv.color, fontWeight: 600 }}>{nv.label}</div>
                       </div>
-                      <span style={{ fontWeight: 700, fontSize: 13, color: col, width: 30, textAlign: "right" }}>
-                        {score != null ? score.toFixed(1) : "—"}
-                      </span>
+                      <div className="bartrack" style={{ flex: 1, height: 6 }}>
+                        <div className="barfill" style={{ width: `${((score ?? 0) / 10) * 100}%`, background: col }} />
+                      </div>
                     </div>
                   </td>
                 </tr>
