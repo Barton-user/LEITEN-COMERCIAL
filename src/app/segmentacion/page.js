@@ -14,7 +14,7 @@ export default function SegmentacionPage() {
       meta={SEG_META}
       vendedores={vendedores}
       title="Segmentación de clientes"
-      sub="Validación de los datos maestros de la ficha. Filtrá por vendedor, revisá los estados y aprobá la segmentación desde Gerencia."
+      sub="Validación de los datos maestros de la ficha. “Aprobación de gerencia” lista las fichas completas que esperan al gerente: revisá y aprobá (pasan a Validación aprobada)."
     />
   );
 }

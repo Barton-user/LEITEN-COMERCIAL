@@ -44,16 +44,25 @@ export const CICLO_META = {
 };
 
 // Estado de segmentación (Sección 4)
-export const SEG_ESTADOS = ["Para validar", "Validación aprobada", "Omitir validación"];
+export const SEG_ESTADOS = [
+  "Para validar",
+  "Aprobación de gerencia",
+  "Validación aprobada",
+  "Omitir validación",
+];
 
 export const SEG_META = {
   "Para validar": {
     color: "#f59e0b",
-    desc: "Estado de entrada, propiedad del vendedor. La ficha espera validación de gerencia.",
+    desc: "Ficha incompleta, propiedad del vendedor. Debe completar los datos maestros antes de pasar a aprobación de gerencia.",
+  },
+  "Aprobación de gerencia": {
+    color: "#a855f7",
+    desc: "Ficha completa esperando validación del gerente. Revisá segmento, categoría y contactos clave, y aprobá (pasa a Validación aprobada).",
   },
   "Validación aprobada": {
     color: "#22c55e",
-    desc: "El gerente de sucursal confirmó segmento, categoría y contactos clave.",
+    desc: "El gerente de sucursal confirmó segmento, categoría y contactos clave. Apta para cotizar.",
   },
   "Omitir validación": {
     color: "#64748b",

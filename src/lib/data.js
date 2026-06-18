@@ -3,11 +3,22 @@ import path from "path";
 
 let _cache = null;
 
+// Bucket de segmentación para la vista (combina estado + "ficha completa").
+// El monitor de gerencia muestra fichas COMPLETAS y no validadas (doc §4).
+function segBucket(c) {
+  if (c.seg === "Validación aprobada") return "Validación aprobada";
+  if (c.seg === "Omitir validación") return "Omitir validación";
+  // c.seg === "Para validar"
+  return c.revisado === "Revisado" ? "Aprobación de gerencia" : "Para validar";
+}
+
 export function getClientes() {
   if (_cache) return _cache;
   const file = path.join(process.cwd(), "data", "clientes.json");
   const raw = fs.readFileSync(file, "utf-8");
-  _cache = JSON.parse(raw);
+  const list = JSON.parse(raw);
+  for (const c of list) c.segEstado = segBucket(c);
+  _cache = list;
   return _cache;
 }
 

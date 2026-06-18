@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 
 export async function GET(request) {
   const sp = request.nextUrl.searchParams;
-  const campo = sp.get("campo") === "seg" ? "seg" : "ciclo";
+  const campo = sp.get("campo") === "seg" ? "segEstado" : "ciclo";
   const result = query({
     campo,
     estado: sp.get("estado") || "",

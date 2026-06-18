@@ -70,7 +70,7 @@ export default function ClientesView({
   }
 
   function segDe(c) {
-    return segOverrides[c.id] || c.seg;
+    return segOverrides[c.id] || c.segEstado;
   }
 
   function aprobarSegmentacion(c) {
@@ -212,7 +212,9 @@ export default function ClientesView({
                 const estVal = mode === "seg" ? segDe(c) : c.ciclo;
                 const color = meta[estVal]?.color || "#64748b";
                 const overridden =
-                  mode === "seg" && segOverrides[c.id] && segOverrides[c.id] !== c.seg;
+                  mode === "seg" &&
+                  segOverrides[c.id] &&
+                  segOverrides[c.id] !== c.segEstado;
                 return (
                   <tr key={c.id}>
                     <td>
@@ -380,14 +382,21 @@ function Drawer({
         <div className="drawer-actions">
           {mode === "seg" ? (
             <>
-              {segActual === "Validación aprobada" ? (
+              {segActual === "Validación aprobada" && (
                 <div className="muted" style={{ fontSize: 13 }}>
                   Ficha ya validada por gerencia. Apta para cotizar.
                 </div>
-              ) : (
+              )}
+              {segActual === "Aprobación de gerencia" && (
                 <button className="btn" onClick={onAprobar}>
                   ✓ Aprobar segmentación (Gerencia)
                 </button>
+              )}
+              {segActual === "Para validar" && (
+                <div className="muted" style={{ fontSize: 13 }}>
+                  Ficha incompleta, pendiente del vendedor. No apta para aprobar
+                  hasta que esté completa.
+                </div>
               )}
               {segActual === "Omitir validación" && (
                 <button className="btn sec" onClick={onEnviarValidar}>
