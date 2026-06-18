@@ -234,8 +234,13 @@ export function getSucursales() {
   );
 }
 
-function applyBaseFilters(data, { vendedor, sucursal, q }) {
+function applyBaseFilters(data, { vendedor, sucursal, q, gerencia }) {
   let rows = data;
+  if (gerencia) {
+    const g = GERENTES.find((x) => x.nombre === gerencia);
+    const set = new Set(g ? g.sucursales : []);
+    rows = rows.filter((c) => set.has(c.sucursal));
+  }
   if (vendedor) rows = rows.filter((c) => c.vendedor === vendedor);
   if (sucursal) rows = rows.filter((c) => c.sucursal === sucursal);
   if (q) {
@@ -256,11 +261,12 @@ export function query({
   estado, // valor del estado seleccionado o ""
   vendedor,
   sucursal,
+  gerencia,
   q,
   page = 0,
   pageSize = 50,
 }) {
-  const base = applyBaseFilters(getClientes(), { vendedor, sucursal, q });
+  const base = applyBaseFilters(getClientes(), { vendedor, sucursal, q, gerencia });
 
   // Conteo por estado (sobre el conjunto filtrado, ignorando el estado seleccionado)
   const stats = {};

@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { money } from "@/lib/format";
+import { GERENTES } from "@/lib/constants";
 
 const PAGE_SIZE = 50;
 
@@ -12,6 +13,7 @@ export default function ClientesView({
   title,
   sub,
   mode, // "ciclo" | "seg"
+  gerencia = "", // filtro de gerencia heredado de la página
 }) {
   const [estado, setEstado] = useState("");
   const [vendedor, setVendedor] = useState("");
@@ -40,6 +42,7 @@ export default function ClientesView({
       campo,
       estado,
       vendedor,
+      gerencia,
       q,
       page: String(page),
       pageSize: String(PAGE_SIZE),
@@ -48,11 +51,17 @@ export default function ClientesView({
     const json = await res.json();
     setData(json);
     setLoading(false);
-  }, [campo, estado, vendedor, q, page]);
+  }, [campo, estado, vendedor, gerencia, q, page]);
 
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  // al cambiar la gerencia, reseteo página y vendedor seleccionado
+  useEffect(() => {
+    setPage(0);
+    setVendedor("");
+  }, [gerencia]);
 
   // debounce de búsqueda
   const [qInput, setQInput] = useState("");
@@ -150,15 +159,23 @@ export default function ClientesView({
           }}
           style={{ minWidth: 240 }}
         >
-          <option value="">Todos los vendedores</option>
-          {vendedores.map((v) => (
-            <option key={v.vendedor} value={v.vendedor}>
-              {v.vendedor}
-              {v.sucursal && v.sucursal !== "Sin asignar"
-                ? ` · ${v.sucursal}`
-                : ""}
-            </option>
-          ))}
+          <option value="">
+            {gerencia ? `Vendedores de ${gerencia}` : "Todos los vendedores"}
+          </option>
+          {(() => {
+            const sucs = gerencia
+              ? GERENTES.find((g) => g.nombre === gerencia)?.sucursales || []
+              : null;
+            const opts = sucs
+              ? vendedores.filter((v) => sucs.includes(v.sucursal))
+              : vendedores;
+            return opts.map((v) => (
+              <option key={v.vendedor} value={v.vendedor}>
+                {v.vendedor}
+                {v.sucursal && v.sucursal !== "Sin asignar" ? ` · ${v.sucursal}` : ""}
+              </option>
+            ));
+          })()}
         </select>
         <input
           type="search"

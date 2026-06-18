@@ -11,6 +11,7 @@ export async function GET(request) {
     estado: sp.get("estado") || "",
     vendedor: sp.get("vendedor") || "",
     sucursal: sp.get("sucursal") || "",
+    gerencia: sp.get("gerencia") || "",
     q: sp.get("q") || "",
     page: parseInt(sp.get("page") || "0", 10),
     pageSize: parseInt(sp.get("pageSize") || "50", 10),

@@ -34,9 +34,8 @@ function ScoreCell({ score }) {
   );
 }
 
-export default function SegSeguimiento({ vendedores, gerentes: gerentesList }) {
+export default function SegSeguimiento({ vendedores, gerentes: gerentesList, gerencia, onGerencia }) {
   const [vendedor, setVendedor] = useState("");
-  const [gerencia, setGerencia] = useState("");
   const [objVend, setObjVend] = useState(OBJ_VEND);
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -95,7 +94,7 @@ export default function SegSeguimiento({ vendedores, gerentes: gerentesList }) {
           </span>
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
-          <select value={gerencia} onChange={(e) => { setGerencia(e.target.value); setVendedor(""); }}>
+          <select value={gerencia} onChange={(e) => { onGerencia(e.target.value); setVendedor(""); }}>
             <option value="">Todas las gerencias</option>
             {gerentesList.map((g) => (
               <option key={g.nombre} value={g.nombre}>{g.nombre}</option>
