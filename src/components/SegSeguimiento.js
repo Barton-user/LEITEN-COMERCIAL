@@ -2,7 +2,6 @@
 import { useEffect, useState, useCallback } from "react";
 
 const OBJ_VEND = 35; // fichas trabajadas en 30 días = 10 (vendedor)
-const OBJ_GER = 150; // validaciones en 30 días = 10 (gerente)
 
 function puntaje(trabajo, objetivo) {
   if (!objetivo) return 0;
@@ -116,39 +115,34 @@ export default function SegSeguimiento({ vendedores, gerentes: gerentesList }) {
       ) : (
         <>
           {/* ── Gerentes ── */}
-          <div className="lb-title">Gerentes — validaciones (aprobaciones)</div>
+          <div className="lb-title">Gerentes — al día con sus pendientes (SLA 24/72hs)</div>
           <table className="grid lb" style={{ marginBottom: 22 }}>
             <thead>
               <tr>
                 <th style={{ width: 36 }}>#</th>
                 <th>Gerente</th>
-                <th className="num">Hoy</th>
-                <th className="num">7 días</th>
-                <th className="num">14 días</th>
-                <th className="num">30 días</th>
                 <th className="num">Pend.</th>
-                <th style={{ width: 230 }}>Puntaje (30d)</th>
+                <th className="num">Al día ≤24h</th>
+                <th className="num">≤72h</th>
+                <th className="num">Atrasados +72h</th>
+                <th style={{ width: 230 }}>Puntaje (SLA)</th>
               </tr>
             </thead>
             <tbody>
-              {gerentes.map((g, idx) => {
-                const score = puntaje(g.trabajo30, OBJ_GER);
-                return (
-                  <tr key={g.nombre} className={idx === 0 && score > 0 && !gerencia ? "lb-top" : ""}>
-                    <td style={{ fontWeight: 700, color: "var(--muted)" }}>{idx + 1}</td>
-                    <td>
-                      <span style={{ fontWeight: 600 }}>{g.nombre}</span>
-                      <span className="muted" style={{ fontSize: 11 }}> · {g.sucursales.filter((s) => !s.startsWith("Gerencia")).join(", ")}</span>
-                    </td>
-                    <td className="num" style={{ fontWeight: 700, color: g.valHoy ? "#22c55e" : "var(--muted)" }}>{g.valHoy}</td>
-                    <td className="num" style={{ fontWeight: 600 }}>{g.val7}</td>
-                    <td className="num" style={{ fontWeight: 600 }}>{g.val14}</td>
-                    <td className="num" style={{ fontWeight: 600 }}>{g.val30}</td>
-                    <td className="num" style={{ color: "#a855f7", fontWeight: 600 }}>{g.pendientes}</td>
-                    <td><ScoreCell score={score} /></td>
-                  </tr>
-                );
-              })}
+              {gerentes.map((g, idx) => (
+                <tr key={g.nombre} className={idx === 0 && !gerencia ? "lb-top" : ""}>
+                  <td style={{ fontWeight: 700, color: "var(--muted)" }}>{idx + 1}</td>
+                  <td>
+                    <span style={{ fontWeight: 600 }}>{g.nombre}</span>
+                    <span className="muted" style={{ fontSize: 11 }}> · {g.sucursales.filter((s) => !s.startsWith("Gerencia")).join(", ")}</span>
+                  </td>
+                  <td className="num" style={{ color: "#a855f7", fontWeight: 700 }}>{g.pendientes}</td>
+                  <td className="num" style={{ color: "#22c55e", fontWeight: 600 }}>{g.al24}</td>
+                  <td className="num" style={{ fontWeight: 600 }}>{g.al72}</td>
+                  <td className="num" style={{ color: g.atras ? "#ef4444" : "var(--muted)", fontWeight: 700 }}>{g.atras}</td>
+                  <td><ScoreCell score={g.score} /></td>
+                </tr>
+              ))}
             </tbody>
           </table>
 
@@ -207,7 +201,7 @@ export default function SegSeguimiento({ vendedores, gerentes: gerentesList }) {
         </>
       )}
       <div className="muted" style={{ fontSize: 11, marginTop: 12 }}>
-        Gerencias: Basso (Córdoba, Neuquén, Mendoza) · Nicolosi (Rosario, Santa Fe, Corrientes) · Santana (Tucumán) · Rodríguez (Salta) · Guillén (Buenos Aires). Columnas Hoy/7/14/30 = validaciones por ventana. Puntaje = trabajo 30d ÷ objetivo × 10. Fechas mock hasta conectar la API del ERP.
+Gerentes: el puntaje mide qué tan al día tienen sus pendientes (≤24h=10 · ≤72h=8 · +72h=3); más backlog viejo, peor puntaje (no premia el volumen). Vendedores: puntaje por trabajo realizado en 30 días (completar + validar) ÷ objetivo × 10. Las columnas Hoy/7/14/30 de vendedores son validaciones por ventana. Fechas mock hasta conectar la API del ERP.
       </div>
     </div>
   );

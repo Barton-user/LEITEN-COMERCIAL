@@ -96,30 +96,33 @@ export function segSeguimiento({ vendedor = "", gerencia = "" } = {}) {
   const cut14 = isoDaysAgo(13);
   const cut30 = isoDaysAgo(29);
 
-  // ── Gerentes (sobre todos los clientes): validaciones por ventana en sus sucursales ──
+  // ── Gerentes: puntaje por antigüedad de sus PENDIENTES (SLA 24/72hs), no por volumen ──
+  // ≤24h = 10 (al día) · ≤72h = 8 · +72h = 3 (atrasado). 0 pendientes = 10.
   const gmap = new Map();
   for (const g of GERENTES)
     gmap.set(g.nombre, {
       nombre: g.nombre,
       sucursales: g.sucursales,
-      valHoy: 0, val7: 0, val14: 0, val30: 0, pendientes: 0,
+      pendientes: 0, al24: 0, al72: 0, atras: 0, sumPts: 0,
+      val30: 0,
     });
   for (const c of all) {
     const ger = SUC_A_GERENTE[c.sucursal];
     if (!ger) continue;
     const row = gmap.get(ger);
-    if (c.segEstado === "Validación aprobada" && c.fechaVal) {
-      if (c.fechaVal >= cutHoy) row.valHoy++;
-      if (c.fechaVal >= cut7) row.val7++;
-      if (c.fechaVal >= cut14) row.val14++;
-      if (c.fechaVal >= cut30) row.val30++;
-    } else if (c.segEstado === "Aprobación de gerencia") {
+    if (c.segEstado === "Aprobación de gerencia") {
       row.pendientes++;
+      const h = c.horasEstado || 0;
+      if (h <= 24) { row.al24++; row.sumPts += 10; }
+      else if (h <= 72) { row.al72++; row.sumPts += 8; }
+      else { row.atras++; row.sumPts += 3; }
+    } else if (c.segEstado === "Validación aprobada" && c.fechaVal && c.fechaVal >= cut30) {
+      row.val30++;
     }
   }
   const gerentes = [...gmap.values()]
-    .map((g) => ({ ...g, trabajo30: g.val30 }))
-    .sort((a, b) => b.trabajo30 - a.trabajo30);
+    .map((g) => ({ ...g, score: g.pendientes ? +(g.sumPts / g.pendientes).toFixed(1) : 10 }))
+    .sort((a, b) => b.score - a.score || a.atras - b.atras);
 
   // ── Vendedores (con filtros de vendedor y gerencia) ──
   let base = all;
