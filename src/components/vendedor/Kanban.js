@@ -18,23 +18,29 @@ function vencInfo(fechaISO) {
 
 export default function Kanban({ ops }) {
   const [empresa, setEmpresa] = useState("");
+  const [molde, setMolde] = useState(0); // 0 = todos los moldes
   const [open, setOpen] = useState(null); // stage key abierto (acordeón simple)
   const [sel, setSel] = useState(null);
 
-  const filtradas = useMemo(
-    () => (empresa ? ops.filter((o) => o.empresa === empresa) : ops),
-    [ops, empresa]
-  );
+  const filtradas = useMemo(() => {
+    let r = ops;
+    if (empresa) r = r.filter((o) => o.empresa === empresa);
+    if (molde) r = r.filter((o) => o.molde === molde);
+    return r;
+  }, [ops, empresa, molde]);
 
   const porEtapa = useMemo(() => {
     const m = {};
-    for (const k of ET_ORDER) m[k] = [];
     for (const o of filtradas) (m[o.estado] || (m[o.estado] = [])).push(o);
     return m;
   }, [filtradas]);
 
-  const stagesConOps = ET_ORDER.filter((k) => (porEtapa[k] || []).length > 0);
-  const openKey = open ?? stagesConOps[0];
+  // Secuencia de pasos: si hay molde elegido, su embudo; si no, el orden canónico (unión).
+  const seq = molde ? MOLDES[molde].etapas : ET_ORDER;
+  const stepNum = (k) => seq.indexOf(k) + 1;
+  // Con molde: mostrar todos sus pasos (numerados 1..N). Sin molde: solo los que tienen ops.
+  const stages = molde ? seq : seq.filter((k) => (porEtapa[k] || []).length > 0);
+  const openKey = open ?? stages.find((k) => (porEtapa[k] || []).length > 0) ?? stages[0];
 
   const activas = filtradas.filter((o) => o.estado !== "ganada" && o.estado !== "entregado");
   const valorJuego = activas.reduce((s, o) => s + (o.valor || 0), 0);
@@ -58,6 +64,22 @@ export default function Kanban({ ops }) {
         </div>
       </div>
 
+      {/* Selector de molde (embudo) */}
+      <div className="mv-toolbar" style={{ borderBottom: "none", paddingTop: 0 }}>
+        <select
+          className="mv-select"
+          value={molde}
+          onChange={(e) => { setMolde(Number(e.target.value)); setOpen(null); }}
+        >
+          <option value={0}>Todos los embudos (unión de etapas)</option>
+          {[1, 2, 3, 4].map((m) => (
+            <option key={m} value={m}>
+              Molde {m} · {MOLDES[m].nombre} ({MOLDES[m].etapas.length} pasos)
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* Resumen */}
       <div className="mv-summary">
         <div className="mv-sum" style={{ background: "#0077cc" }}>
@@ -77,17 +99,17 @@ export default function Kanban({ ops }) {
 
       {/* Kanban acordeón */}
       <div className="mv-kanban">
-        {stagesConOps.length === 0 && <div className="mv-col-empty">Sin oportunidades.</div>}
-        {stagesConOps.map((k) => {
+        {stages.length === 0 && <div className="mv-col-empty">Sin oportunidades.</div>}
+        {stages.map((k) => {
           const et = ET[k];
-          const lista = porEtapa[k];
+          const lista = porEtapa[k] || [];
           const isOpen = openKey === k;
           return (
             <div key={k} className={"mv-col" + (isOpen ? " open" : "")}>
               <div className="mv-col-hdr" onClick={() => setOpen(isOpen ? "__none__" : k)}>
-                <span className="mv-col-dot" style={{ background: et.color }}>{et.prob}</span>
+                <span className="mv-col-dot" style={{ background: et.color }}>{stepNum(k)}</span>
                 <div className="mv-col-title">
-                  {et.nombre} <span className="prob">· {et.prob}%</span>
+                  {et.nombre} <span className="prob">· paso {stepNum(k)} de {seq.length} · {et.prob}%</span>
                 </div>
                 <span className="mv-col-count">{lista.length}</span>
                 <span className="mv-col-chevron">›</span>
