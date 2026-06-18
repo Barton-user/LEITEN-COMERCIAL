@@ -1,60 +1,70 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ET, MOLDES, moldeDe } from "@/lib/pipeline";
 
 const EMPRESAS = ["Leiten", "Sinis", "Barton"];
-const ORIGENES = ["Nuevo", "Cliente existente", "Reactivación"];
+
+// La segmentación y el origen vienen del ERP al elegir el cliente (acá, de los datos mock).
+function segOportunidad(segEstadoCliente) {
+  if (segEstadoCliente === "Validación aprobada") return "Validación aprobada";
+  if (segEstadoCliente === "Omitir validación") return "Omitir validación";
+  return "Para validar"; // "Para validar" o "Aprobación de gerencia"
+}
+function origenDeCiclo(ciclo) {
+  if (ciclo === "Prospecto") return "Nuevo";
+  if (ciclo === "En riesgo" || ciclo === "Inactivo") return "Reactivación";
+  return "Cliente existente";
+}
 
 export default function NuevaOportunidad({ onSave, onClose }) {
   const [f, setF] = useState({
-    nombre: "",
-    empresa: "Leiten",
-    tipo: "Venta",
-    requiereOT: false,
-    cliente: "",
-    obra: "",
-    contacto: "",
-    valor: "",
-    tipoOrigen: "Nuevo",
-    estado: "prospecto",
-    seg_estado: "Para validar",
+    nombre: "", empresa: "Leiten", tipo: "Venta", requiereOT: false,
+    obra: "", contacto: "", valor: "", estado: "prospecto",
   });
   const set = (k, v) => setF((p) => ({ ...p, [k]: v }));
+
+  // Cliente: buscador con autocompletado (viene del ERP)
+  const [q, setQ] = useState("");
+  const [sugs, setSugs] = useState([]);
+  const [cli, setCli] = useState(null); // {id,nombre,segEstado,ciclo,vendedor,sucursal}
+
+  useEffect(() => {
+    if (cli || q.trim().length < 2) { setSugs([]); return; }
+    const t = setTimeout(async () => {
+      const sp = new URLSearchParams({ campo: "seg", q: q.trim(), pageSize: "8" });
+      const res = await fetch(`/api/clientes?${sp.toString()}`);
+      const json = await res.json();
+      setSugs(json.rows || []);
+    }, 250);
+    return () => clearTimeout(t);
+  }, [q, cli]);
 
   const ot = f.empresa === "Sinis" && f.requiereOT;
   const molde = moldeDe(f.empresa, f.tipo, ot);
   const etapas = MOLDES[molde].etapas;
-  const valido = f.nombre.trim() && f.cliente.trim();
+  const valido = f.nombre.trim() && cli;
+
+  const segOpp = cli ? segOportunidad(cli.segEstado) : null;
+  const origen = cli ? origenDeCiclo(cli.ciclo) : null;
+  const validada = segOpp === "Validación aprobada";
 
   function guardar() {
     const hoy = new Date();
-    const prox = new Date();
-    prox.setDate(hoy.getDate() + 3);
-    const op = {
+    const prox = new Date(); prox.setDate(hoy.getDate() + 3);
+    onSave({
       id: "n" + Date.now(),
       nombre: f.nombre.trim(),
-      empresa: f.empresa,
-      molde,
-      tipo: f.tipo,
-      requiereOT: ot,
+      empresa: f.empresa, molde, tipo: f.tipo, requiereOT: ot,
       estado: etapas.includes(f.estado) ? f.estado : "prospecto",
-      valor: parseInt(f.valor || "0", 10) || 0,
-      moneda: "USD",
-      tipoOrigen: f.tipoOrigen,
-      tuvoDemo: false,
-      cliente: f.cliente.trim(),
-      obra: f.obra.trim(),
-      contacto: f.contacto.trim(),
-      vendedor: "Juan Garrido",
-      sucursal: "",
-      cliente_ciclo: f.tipoOrigen === "Nuevo" ? "Prospecto" : "Activo",
-      seg_estado: f.seg_estado,
-      productos: [],
-      fechaCreacion: hoy.toISOString().slice(0, 10),
+      valor: parseInt(f.valor || "0", 10) || 0, moneda: "USD",
+      tipoOrigen: origen, tuvoDemo: false,
+      cliente: cli.nombre, obra: f.obra.trim(), contacto: f.contacto.trim(),
+      vendedor: cli.vendedor || "Juan Garrido", sucursal: cli.sucursal || "",
+      cliente_ciclo: cli.ciclo, seg_estado: segOpp,
+      productos: [], fechaCreacion: hoy.toISOString().slice(0, 10),
       proxAct: { tipo: "relevamiento", fecha: prox.toISOString().slice(0, 10) },
       _nueva: true,
-    };
-    onSave(op);
+    });
   }
 
   return (
@@ -68,6 +78,51 @@ export default function NuevaOportunidad({ onSave, onClose }) {
           <label className="mv-fl">Nombre de la oportunidad *</label>
           <input className="mv-fi" value={f.nombre} onChange={(e) => set("nombre", e.target.value)} placeholder="Ej: Vibradores para Edificio Alsina" />
         </div>
+
+        {/* Cliente: viene del ERP */}
+        <div className="mv-fg">
+          <label className="mv-fl">Cliente * <span style={{ color: "#aaa", fontWeight: 400 }}>(del ERP)</span></label>
+          <div className="mv-search">
+            <input
+              className="mv-fi"
+              value={cli ? cli.nombre : q}
+              onChange={(e) => { setCli(null); setQ(e.target.value); }}
+              placeholder="Buscar cliente por nombre / código…"
+            />
+            {sugs.length > 0 && (
+              <div className="mv-sugs">
+                {sugs.map((s) => (
+                  <div key={s.id} className="mv-sug" onClick={() => { setCli(s); setSugs([]); setQ(""); }}>
+                    <div className="nm">{s.nombre}</div>
+                    <div className="meta">{s.id} · {s.segEstado} · {s.ciclo}{s.vendedor ? ` · ${s.vendedor}` : ""}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* Datos automáticos del cliente */}
+        {cli && (
+          <div className="mv-cli-info">
+            <div className="lbl">Datos del cliente (automático, del ERP)</div>
+            <div className="row">
+              <span>Segmentación</span>
+              <span className={"mv-pill " + (validada ? "ok" : segOpp === "Omitir validación" ? "gray" : "no")}>
+                {validada ? "✓ Validado" : segOpp === "Omitir validación" ? "Omitir" : "Sin validar"}
+              </span>
+            </div>
+            <div className="row">
+              <span>Origen de la oportunidad</span>
+              <span className="mv-pill gray">{origen}</span>
+            </div>
+            {!validada && segOpp !== "Omitir validación" && (
+              <div className="auto" style={{ marginTop: 8, color: "#e65100" }}>
+                🔒 Ficha sin validar: no podrá avanzar a cotización hasta que Gerencia la valide.
+              </div>
+            )}
+          </div>
+        )}
 
         <div className="mv-fg">
           <label className="mv-fl">Empresa *</label>
@@ -100,11 +155,6 @@ export default function NuevaOportunidad({ onSave, onClose }) {
           Molde {molde} · {MOLDES[molde].nombre} — {etapas.length} pasos
         </div>
 
-        <div className="mv-fg">
-          <label className="mv-fl">Cliente *</label>
-          <input className="mv-fi" value={f.cliente} onChange={(e) => set("cliente", e.target.value)} placeholder="Nombre / razón social" />
-        </div>
-
         <div className="mv-row2">
           <div className="mv-fg">
             <label className="mv-fl">Obra / proyecto</label>
@@ -116,32 +166,15 @@ export default function NuevaOportunidad({ onSave, onClose }) {
           </div>
         </div>
 
-        <div className="mv-row2">
-          <div className="mv-fg">
-            <label className="mv-fl">Valor estimado (USD)</label>
-            <input className="mv-fi" type="number" inputMode="numeric" value={f.valor} onChange={(e) => set("valor", e.target.value)} placeholder="0" />
-          </div>
-          <div className="mv-fg">
-            <label className="mv-fl">Origen</label>
-            <select className="mv-fi" value={f.tipoOrigen} onChange={(e) => set("tipoOrigen", e.target.value)}>
-              {ORIGENES.map((o) => <option key={o}>{o}</option>)}
-            </select>
-          </div>
+        <div className="mv-fg">
+          <label className="mv-fl">Valor estimado (USD)</label>
+          <input className="mv-fi" type="number" inputMode="numeric" value={f.valor} onChange={(e) => set("valor", e.target.value)} placeholder="0" />
         </div>
 
         <div className="mv-fg">
           <label className="mv-fl">Etapa inicial</label>
           <select className="mv-fi" value={f.estado} onChange={(e) => set("estado", e.target.value)}>
             {etapas.map((k, i) => <option key={k} value={k}>{i + 1}. {ET[k].nombre}</option>)}
-          </select>
-        </div>
-
-        <div className="mv-fg">
-          <label className="mv-fl">Estado de segmentación del cliente</label>
-          <select className="mv-fi" value={f.seg_estado} onChange={(e) => set("seg_estado", e.target.value)}>
-            <option>Para validar</option>
-            <option>Validación aprobada</option>
-            <option>Omitir validación</option>
           </select>
         </div>
 

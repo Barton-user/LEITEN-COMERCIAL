@@ -129,6 +129,22 @@
 .mv-toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 11px 12px; border: 1.5px solid #ddd; border-radius: 10px; background: #fff; }
 .mv-toggle-row .lbl { font-size: 13px; font-weight: 600; color: #333; }
 
+/* Buscador de cliente (autocomplete desde ERP/mock) */
+.mv-search { position: relative; }
+.mv-sugs { position: absolute; left: 0; right: 0; top: 100%; margin-top: 4px; background: #fff; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 6px 20px rgba(0,0,0,.12); z-index: 20; max-height: 240px; overflow-y: auto; }
+.mv-sug { padding: 10px 12px; border-bottom: 1px solid #f2f2f2; cursor: pointer; }
+.mv-sug:active, .mv-sug:hover { background: #f7f7f7; }
+.mv-sug .nm { font-size: 13px; font-weight: 600; color: #1a1a1a; }
+.mv-sug .meta { font-size: 11px; color: #888; margin-top: 2px; }
+.mv-cli-info { background: #fff; border: 1.5px solid #e3e3e3; border-radius: 10px; padding: 12px; margin-bottom: 14px; }
+.mv-cli-info .lbl { font-size: 11px; color: #888; font-weight: 600; text-transform: uppercase; letter-spacing: .3px; }
+.mv-cli-info .row { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-top: 7px; font-size: 13px; }
+.mv-cli-info .auto { font-size: 9px; color: #aaa; font-weight: 600; }
+.mv-pill { font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 12px; }
+.mv-pill.ok { background: #e8f5e9; color: #2e7d32; }
+.mv-pill.no { background: #fff3e0; color: #e65100; }
+.mv-pill.gray { background: #eceff1; color: #607d8b; }
+
 /* Volver a la app principal (header) */
 .mv-back { display: inline-flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 700; color: #1a1a1a; background: rgba(0,0,0,.12); padding: 5px 10px; border-radius: 16px; text-decoration: none; }
 .mv-hdr-r { display: flex; align-items: center; gap: 10px; }
