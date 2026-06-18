@@ -34,6 +34,19 @@ export function getClientes() {
       d.setDate(d.getDate() - hashSpan(c.id, 90));
       c.fechaVal = d.toISOString().slice(0, 10);
     }
+    // Antigüedad MOCK en el estado actual (reemplazar por fecha real del ERP).
+    // Distribución sesgada a fichas recientes: ~45% muy bueno, 20% bueno, 25% regular, 10% muy malo.
+    if (c.segEstado === "Para validar") {
+      const h = hashSpan(c.id, 1000) / 1000;
+      let dias;
+      if (h < 0.45) dias = Math.floor((h / 0.45) * 7);
+      else if (h < 0.65) dias = 8 + Math.floor(((h - 0.45) / 0.2) * 7);
+      else if (h < 0.9) dias = 16 + Math.floor(((h - 0.65) / 0.25) * 44);
+      else dias = 61 + Math.floor(((h - 0.9) / 0.1) * 89);
+      c.diasEstado = dias;
+    } else if (c.segEstado === "Aprobación de gerencia") {
+      c.horasEstado = hashSpan(c.id, 160); // 0..159 horas
+    }
   }
   _cache = list;
   return _cache;
@@ -97,6 +110,50 @@ export function segSeguimiento({ period = "7d", vendedor = "", sucursal = "" }) 
     .sort((a, b) => b.validados - a.validados || b.pendientes - a.pendientes);
 
   return { period, totals, porVendedor };
+}
+
+// Puntos de segmentación de una ficha "Para validar" según antigüedad (días).
+function ptsParaValidar(dias) {
+  if (dias <= 7) return { pts: 10, k: "mb" };
+  if (dias <= 15) return { pts: 8, k: "b" };
+  if (dias <= 60) return { pts: 5, k: "r" };
+  return { pts: 2, k: "mm" };
+}
+
+// Puntaje de empleados (vendedores). Hoy el único criterio con datos es Segmentación.
+export function puntuacionVendedores() {
+  const data = getClientes();
+  const map = new Map();
+  for (const c of data) {
+    if (c.segEstado !== "Para validar") continue;
+    if (!map.has(c.vendedor))
+      map.set(c.vendedor, {
+        vendedor: c.vendedor,
+        sucursal: c.sucursal,
+        n: 0,
+        sum: 0,
+        det: { mb: 0, b: 0, r: 0, mm: 0 },
+      });
+    const row = map.get(c.vendedor);
+    const { pts, k } = ptsParaValidar(c.diasEstado || 0);
+    row.n++;
+    row.sum += pts;
+    row.det[k]++;
+  }
+  return [...map.values()]
+    .filter((r) => r.vendedor !== "Marketing" && r.vendedor !== "Sin asignar")
+    .map((r) => {
+      const seg = r.n ? +(r.sum / r.n).toFixed(1) : null;
+      return {
+        vendedor: r.vendedor,
+        sucursal: r.sucursal,
+        segFichas: r.n,
+        segScore: seg,
+        detalle: r.det,
+        final: seg, // único criterio activo hoy
+      };
+    })
+    .sort((a, b) => (b.final ?? 0) - (a.final ?? 0));
 }
 
 // Lista de vendedores ordenada con su sucursal

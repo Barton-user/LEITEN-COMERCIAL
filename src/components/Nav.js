@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 const LINKS = [
   { href: "/ciclo-vida", label: "Ciclo de vida" },
   { href: "/segmentacion", label: "Segmentación" },
+  { href: "/puntuacion", label: "Puntuación" },
   { href: "/data", label: "Data" },
 ];
 

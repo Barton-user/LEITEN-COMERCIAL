@@ -147,3 +147,10 @@ table.grid td.num { text-align: right; font-variant-numeric: tabular-nums; }
 
 table.grid.lb tbody tr.lb-top { background: rgba(34,197,94,.08); box-shadow: inset 2px 0 0 var(--green); }
 table.grid.lb tbody tr.lb-top:hover { background: rgba(34,197,94,.13); }
+
+table.grid tbody tr.danger-row { background: rgba(239,68,68,.08); box-shadow: inset 3px 0 0 var(--red); }
+table.grid tbody tr.danger-row:hover { background: rgba(239,68,68,.14); }
+
+.vara-box { display: flex; align-items: center; gap: 10px; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; }
+.vara-box input[type=range] { width: 160px; accent-color: var(--accent); }
+.vara-val { font-weight: 700; font-size: 15px; min-width: 30px; text-align: right; }

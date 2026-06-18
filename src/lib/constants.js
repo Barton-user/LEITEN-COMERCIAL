@@ -78,6 +78,32 @@ export const DATA_STATUS = {
   crear: { label: "A crear", color: "#ef4444", accion: "Crear lista / entidad" },
 };
 
+// ── Puntuación de empleados ──
+export const VARA_DEFAULT = 6.0;
+
+// Tiempos objetivo de "Para validar" (responsabilidad del vendedor)
+export const SEG_TIEMPOS_VENDEDOR = [
+  { hasta: 7, label: "Muy bueno", pts: 10, color: "#22c55e" },
+  { hasta: 15, label: "Bueno", pts: 8, color: "#84cc16" },
+  { hasta: 60, label: "Regular", pts: 5, color: "#f59e0b" },
+  { hasta: Infinity, label: "Muy malo", pts: 2, color: "#ef4444" },
+];
+
+// Tiempos objetivo de "Pendientes de gerencia" (responsabilidad del gerente) — para etapa futura
+export const SEG_TIEMPOS_GERENTE = [
+  { hastaHoras: 24, label: "Muy bueno", pts: 10, color: "#22c55e" },
+  { hastaHoras: 72, label: "Bueno", pts: 8, color: "#84cc16" },
+  { hastaHoras: Infinity, label: "Malo", pts: 3, color: "#ef4444" },
+];
+
+// Criterios del puntaje final (ponderables). Hoy solo Segmentación tiene datos.
+export const CRITERIOS = [
+  { id: "seg", label: "Segmentación", peso: 100, activo: true, fuente: "Antigüedad de fichas “Para validar”" },
+  { id: "ventas", label: "Ventas", peso: 0, activo: false, fuente: "Cumplimiento de objetivo (ERP) — próximamente" },
+  { id: "actividad", label: "Actividad comercial", peso: 0, activo: false, fuente: "Visitas/llamados/demos — próximamente" },
+  { id: "postventa", label: "Postventa", peso: 0, activo: false, fuente: "D+15 / D+30 en fecha — próximamente" },
+];
+
 export const DATA_INVENTORY = [
   { lista: "Clientes (padrón maestro)", incluye: "Código, nombre, CUIT, datos fiscales y de contacto", estado: "erp", accion: "Generar API", usadoEn: "Base de toda la app" },
   { lista: "Vendedores", incluye: "Nombre, código y sucursal asignada", estado: "erp", accion: "Generar API", usadoEn: "Filtro por vendedor" },
