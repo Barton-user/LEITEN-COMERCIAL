@@ -66,7 +66,9 @@ export default function SegSeguimiento({ vendedores }) {
         <div>
           <h3 style={{ fontSize: 15, marginBottom: 2 }}>Seguimiento de segmentación</h3>
           <span className="muted" style={{ fontSize: 12 }}>
-            Ranking de vendedores por validaciones en el período.
+            Ranking de vendedores por validaciones en el período ·{" "}
+            <b style={{ color: "#22c55e" }}>{t.validados.toLocaleString("es-AR")} validados</b>{" "}
+            ({periodLabel})
           </span>
         </div>
         <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
@@ -89,26 +91,6 @@ export default function SegSeguimiento({ vendedores }) {
               </button>
             ))}
           </div>
-        </div>
-      </div>
-
-      {/* KPIs */}
-      <div className="kpis" style={{ marginBottom: 18 }}>
-        <div className="kpi" style={{ borderTopColor: "#22c55e", cursor: "default" }}>
-          <div className="kpi-label" style={{ color: "#22c55e" }}>Validados ({periodLabel})</div>
-          <div className="kpi-num">{t.validados.toLocaleString("es-AR")}</div>
-        </div>
-        <div className="kpi" style={{ borderTopColor: "#a855f7", cursor: "default" }}>
-          <div className="kpi-label" style={{ color: "#a855f7" }}>Pendientes de gerencia</div>
-          <div className="kpi-num">{t.pendientes.toLocaleString("es-AR")}</div>
-        </div>
-        <div className="kpi" style={{ borderTopColor: "#f59e0b", cursor: "default" }}>
-          <div className="kpi-label" style={{ color: "#f59e0b" }}>Para validar</div>
-          <div className="kpi-num">{t.paraValidar.toLocaleString("es-AR")}</div>
-        </div>
-        <div className="kpi" style={{ borderTopColor: "#64748b", cursor: "default" }}>
-          <div className="kpi-label" style={{ color: "#64748b" }}>Omitir validación</div>
-          <div className="kpi-num">{t.omitir.toLocaleString("es-AR")}</div>
         </div>
       </div>
 
@@ -158,6 +140,21 @@ export default function SegSeguimiento({ vendedores }) {
               );
             })}
           </tbody>
+          <tfoot>
+            <tr style={{ borderTop: "2px solid var(--line)" }}>
+              <td></td>
+              <td style={{ fontWeight: 700, color: "var(--muted)" }}>Totales</td>
+              <td className="num" style={{ color: "#22c55e", fontWeight: 700 }}>
+                {t.validados.toLocaleString("es-AR")}
+              </td>
+              <td className="num" style={{ color: "#a855f7", fontWeight: 700 }}>
+                {t.pendientes.toLocaleString("es-AR")}
+              </td>
+              <td className="muted" style={{ fontSize: 11.5 }}>
+                {t.paraValidar.toLocaleString("es-AR")} para validar
+              </td>
+            </tr>
+          </tfoot>
         </table>
       )}
       <div className="muted" style={{ fontSize: 11, marginTop: 12 }}>
