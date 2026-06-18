@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 const LINKS = [
   { href: "/ciclo-vida", label: "Ciclo de vida" },
   { href: "/segmentacion", label: "Segmentación" },
+  { href: "/data", label: "Data" },
 ];
 
 export default function Nav() {
