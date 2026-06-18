@@ -1,6 +1,7 @@
 "use client";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { ET, ET_ORDER, MOLDES, MARCA_COLOR, money, bloqueadaPorSeg } from "@/lib/pipeline";
+import NuevaOportunidad from "@/components/vendedor/NuevaOportunidad";
 
 const EMPRESAS = ["Leiten", "Sinis", "Barton"];
 
@@ -21,13 +22,31 @@ export default function Kanban({ ops }) {
   const [molde, setMolde] = useState(0); // 0 = todos los moldes
   const [open, setOpen] = useState(null); // stage key abierto (acordeón simple)
   const [sel, setSel] = useState(null);
+  const [nuevas, setNuevas] = useState([]); // oportunidades creadas en la sesión
+  const [showForm, setShowForm] = useState(false);
+
+  useEffect(() => {
+    try { setNuevas(JSON.parse(localStorage.getItem("opsNuevas") || "[]")); } catch (e) {}
+  }, []);
+
+  function guardarOp(op) {
+    const next = [op, ...nuevas];
+    setNuevas(next);
+    localStorage.setItem("opsNuevas", JSON.stringify(next));
+    setShowForm(false);
+    setEmpresa("");
+    setMolde(0);
+    setOpen(op.estado);
+  }
+
+  const todas = useMemo(() => [...nuevas, ...ops], [nuevas, ops]);
 
   const filtradas = useMemo(() => {
-    let r = ops;
+    let r = todas;
     if (empresa) r = r.filter((o) => o.empresa === empresa);
     if (molde) r = r.filter((o) => o.molde === molde);
     return r;
-  }, [ops, empresa, molde]);
+  }, [todas, empresa, molde]);
 
   const porEtapa = useMemo(() => {
     const m = {};
@@ -148,6 +167,9 @@ export default function Kanban({ ops }) {
       </div>
 
       {sel && <DetSheet op={sel} onClose={() => setSel(null)} />}
+
+      <button className="mv-fab" onClick={() => setShowForm(true)} aria-label="Nueva oportunidad">+</button>
+      {showForm && <NuevaOportunidad onSave={guardarOp} onClose={() => setShowForm(false)} />}
     </>
   );
 }

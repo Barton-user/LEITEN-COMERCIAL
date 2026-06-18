@@ -28,6 +28,12 @@ export const MOLDES = {
 
 export const MARCA_COLOR = { Leiten: "#222222", Sinis: "#C8102E", Barton: "#2e7d32" };
 
+// Molde derivado de empresa + tipo de negocio + ¿Requiere OT? (solo Sinis tiene OT)
+export function moldeDe(empresa, tipo, requiereOT) {
+  if (tipo === "Alquiler") return empresa === "Sinis" && requiereOT ? 4 : 3;
+  return empresa === "Sinis" && requiereOT ? 2 : 1;
+}
+
 export function fichaValidada(op) {
   return op.seg_estado === "Validación aprobada";
 }
