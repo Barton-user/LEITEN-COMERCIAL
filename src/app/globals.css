@@ -154,3 +154,5 @@ table.grid tbody tr.danger-row:hover { background: rgba(239,68,68,.14); }
 .vara-box { display: flex; align-items: center; gap: 10px; background: var(--panel2); border: 1px solid var(--line); border-radius: 8px; padding: 6px 12px; }
 .vara-box input[type=range] { width: 160px; accent-color: var(--accent); }
 .vara-val { font-weight: 700; font-size: 15px; min-width: 30px; text-align: right; }
+
+.lb-title { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; margin-bottom: 8px; }

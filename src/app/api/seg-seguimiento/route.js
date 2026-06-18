@@ -6,9 +6,8 @@ export const dynamic = "force-dynamic";
 export async function GET(request) {
   const sp = request.nextUrl.searchParams;
   const result = segSeguimiento({
-    period: sp.get("period") || "7d",
     vendedor: sp.get("vendedor") || "",
-    sucursal: sp.get("sucursal") || "",
+    gerencia: sp.get("gerencia") || "",
   });
   return NextResponse.json(result);
 }

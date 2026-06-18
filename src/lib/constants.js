@@ -78,6 +78,15 @@ export const DATA_STATUS = {
   crear: { label: "A crear", color: "#ef4444", accion: "Crear lista / entidad" },
 };
 
+// ── Gerencias (gerente → sucursales) ──
+export const GERENTES = [
+  { nombre: "Ariel Basso", sucursales: ["Cordoba", "Neuquen", "Mendoza", "Gerencia Centro-Cuyo"] },
+  { nombre: "Adrian Nicolosi", sucursales: ["Rosario", "Santa Fe", "Corrientes"] },
+  { nombre: "Gustavo Santana", sucursales: ["Tucuman", "Gerencia NOA"] },
+  { nombre: "Adrian Rodriguez", sucursales: ["Salta"] },
+  { nombre: "Hernan Guillen", sucursales: ["Buenos Aires", "Buenos Aires OT"] },
+];
+
 // ── Puntuación de empleados ──
 export const VARA_DEFAULT = 6.0;
 

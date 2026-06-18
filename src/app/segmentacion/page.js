@@ -1,7 +1,7 @@
 import ClientesView from "@/components/ClientesView";
 import SegSeguimiento from "@/components/SegSeguimiento";
 import { getVendedores } from "@/lib/data";
-import { SEG_ESTADOS, SEG_META } from "@/lib/constants";
+import { SEG_ESTADOS, SEG_META, GERENTES } from "@/lib/constants";
 
 export const dynamic = "force-dynamic";
 
@@ -16,7 +16,7 @@ export default function SegmentacionPage() {
         a Validación aprobada).
       </p>
 
-      <SegSeguimiento vendedores={vendedores} />
+      <SegSeguimiento vendedores={vendedores} gerentes={GERENTES} />
 
       <ClientesView
         mode="seg"

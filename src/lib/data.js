@@ -1,5 +1,12 @@
 import fs from "fs";
 import path from "path";
+import { GERENTES } from "./constants";
+
+const SUC_A_GERENTE = (() => {
+  const m = {};
+  for (const g of GERENTES) for (const s of g.sucursales) m[s] = g.nombre;
+  return m;
+})();
 
 let _cache = null;
 
@@ -72,53 +79,93 @@ function cutoffFor(period) {
   return d.toISOString().slice(0, 10);
 }
 
-// Seguimiento de segmentación por vendedor, filtrable por período.
-export function segSeguimiento({ period = "7d", vendedor = "", sucursal = "" }) {
-  let base = getClientes();
-  if (vendedor) base = base.filter((c) => c.vendedor === vendedor);
-  if (sucursal) base = base.filter((c) => c.sucursal === sucursal);
-  const cutoff = cutoffFor(period);
+function isoDaysAgo(n) {
+  const d = new Date();
+  d.setDate(d.getDate() - n);
+  return d.toISOString().slice(0, 10);
+}
 
-  const inPeriod = (fecha) => !cutoff || (fecha && fecha >= cutoff);
+// Seguimiento de segmentación por vendedor: validados por ventana (hoy/7/14/30)
+// y trabajo de 30 días (completadas + validadas) para el puntaje.
+// También agrega el ranking de gerentes (sus validaciones/aprobaciones por ventana).
+export function segSeguimiento({ vendedor = "", gerencia = "" } = {}) {
+  const all = getClientes();
+
+  const cutHoy = isoDaysAgo(0);
+  const cut7 = isoDaysAgo(6);
+  const cut14 = isoDaysAgo(13);
+  const cut30 = isoDaysAgo(29);
+
+  // ── Gerentes (sobre todos los clientes): validaciones por ventana en sus sucursales ──
+  const gmap = new Map();
+  for (const g of GERENTES)
+    gmap.set(g.nombre, {
+      nombre: g.nombre,
+      sucursales: g.sucursales,
+      valHoy: 0, val7: 0, val14: 0, val30: 0, pendientes: 0,
+    });
+  for (const c of all) {
+    const ger = SUC_A_GERENTE[c.sucursal];
+    if (!ger) continue;
+    const row = gmap.get(ger);
+    if (c.segEstado === "Validación aprobada" && c.fechaVal) {
+      if (c.fechaVal >= cutHoy) row.valHoy++;
+      if (c.fechaVal >= cut7) row.val7++;
+      if (c.fechaVal >= cut14) row.val14++;
+      if (c.fechaVal >= cut30) row.val30++;
+    } else if (c.segEstado === "Aprobación de gerencia") {
+      row.pendientes++;
+    }
+  }
+  const gerentes = [...gmap.values()]
+    .map((g) => ({ ...g, trabajo30: g.val30 }))
+    .sort((a, b) => b.trabajo30 - a.trabajo30);
+
+  // ── Vendedores (con filtros de vendedor y gerencia) ──
+  let base = all;
+  if (gerencia) {
+    const g = GERENTES.find((x) => x.nombre === gerencia);
+    const set = new Set(g ? g.sucursales : []);
+    base = base.filter((c) => set.has(c.sucursal));
+  }
+  if (vendedor) base = base.filter((c) => c.vendedor === vendedor);
 
   const map = new Map();
-  let totals = { validados: 0, completadas: 0, trabajo: 0, pendientes: 0, paraValidar: 0, omitir: 0 };
+  const totals = { valHoy: 0, val7: 0, val14: 0, val30: 0, compl30: 0, trabajo30: 0, pendientes: 0, paraValidar: 0 };
   for (const c of base) {
     if (!map.has(c.vendedor))
       map.set(c.vendedor, {
         vendedor: c.vendedor,
         sucursal: c.sucursal,
-        validados: 0,
-        completadas: 0,
-        trabajo: 0,
-        pendientes: 0,
-        paraValidar: 0,
-        omitir: 0,
+        valHoy: 0, val7: 0, val14: 0, val30: 0,
+        compl30: 0, trabajo30: 0, pendientes: 0,
       });
     const row = map.get(c.vendedor);
     if (c.segEstado === "Validación aprobada") {
-      if (inPeriod(c.fechaVal)) { row.validados++; totals.validados++; }
-      if (inPeriod(c.fechaCompletado)) { row.completadas++; totals.completadas++; }
+      const f = c.fechaVal;
+      if (f) {
+        if (f >= cutHoy) { row.valHoy++; totals.valHoy++; }
+        if (f >= cut7) { row.val7++; totals.val7++; }
+        if (f >= cut14) { row.val14++; totals.val14++; }
+        if (f >= cut30) { row.val30++; totals.val30++; }
+      }
+      if (c.fechaCompletado && c.fechaCompletado >= cut30) { row.compl30++; totals.compl30++; }
     } else if (c.segEstado === "Aprobación de gerencia") {
       row.pendientes++;
       totals.pendientes++;
-      if (inPeriod(c.fechaCompletado)) { row.completadas++; totals.completadas++; }
+      if (c.fechaCompletado && c.fechaCompletado >= cut30) { row.compl30++; totals.compl30++; }
     } else if (c.segEstado === "Para validar") {
-      row.paraValidar++;
       totals.paraValidar++;
-    } else if (c.segEstado === "Omitir validación") {
-      row.omitir++;
-      totals.omitir++;
     }
   }
-  for (const r of map.values()) r.trabajo = r.completadas + r.validados;
-  totals.trabajo = totals.completadas + totals.validados;
+  for (const r of map.values()) r.trabajo30 = r.compl30 + r.val30;
+  totals.trabajo30 = totals.compl30 + totals.val30;
 
   const porVendedor = [...map.values()]
-    .filter((r) => r.trabajo > 0 || r.pendientes > 0)
-    .sort((a, b) => b.trabajo - a.trabajo || b.validados - a.validados);
+    .filter((r) => r.trabajo30 > 0 || r.pendientes > 0)
+    .sort((a, b) => b.trabajo30 - a.trabajo30 || b.val30 - a.val30);
 
-  return { period, totals, porVendedor };
+  return { totals, porVendedor, gerentes };
 }
 
 // Puntos de segmentación de una ficha "Para validar" según antigüedad (días).
