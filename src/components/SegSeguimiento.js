@@ -77,6 +77,14 @@ export default function SegSeguimiento({ vendedores, gerentes: gerentesList }) {
   let gerentes = data?.gerentes || [];
   if (gerencia) gerentes = gerentes.filter((g) => g.nombre === gerencia);
 
+  // El selector de vendedores se acota a la gerencia elegida
+  const sucsGerencia = gerencia
+    ? gerentesList.find((g) => g.nombre === gerencia)?.sucursales || []
+    : null;
+  const vendedoresOpts = sucsGerencia
+    ? vendedores.filter((v) => sucsGerencia.includes(v.sucursal))
+    : vendedores;
+
   return (
     <div className="panel-box">
       <div className="row-between" style={{ marginBottom: 14 }}>
@@ -94,8 +102,10 @@ export default function SegSeguimiento({ vendedores, gerentes: gerentesList }) {
             ))}
           </select>
           <select value={vendedor} onChange={(e) => setVendedor(e.target.value)}>
-            <option value="">Todos los vendedores</option>
-            {vendedores.map((v) => (
+            <option value="">
+              {gerencia ? `Vendedores de ${gerencia}` : "Todos los vendedores"}
+            </option>
+            {vendedoresOpts.map((v) => (
               <option key={v.vendedor} value={v.vendedor}>{v.vendedor}</option>
             ))}
           </select>
