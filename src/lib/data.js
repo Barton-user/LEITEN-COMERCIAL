@@ -34,6 +34,12 @@ export function getClientes() {
       d.setDate(d.getDate() - hashSpan(c.id, 90));
       c.fechaVal = d.toISOString().slice(0, 10);
     }
+    // Fecha de COMPLETADO mock (cuando el vendedor sacó la ficha de "Para validar").
+    if (c.segEstado === "Aprobación de gerencia" || c.segEstado === "Validación aprobada") {
+      const dc = new Date();
+      dc.setDate(dc.getDate() - hashSpan(c.id + "c", 90));
+      c.fechaCompletado = dc.toISOString().slice(0, 10);
+    }
     // Antigüedad MOCK en el estado actual (reemplazar por fecha real del ERP).
     // Distribución sesgada a fichas recientes: ~45% muy bueno, 20% bueno, 25% regular, 10% muy malo.
     if (c.segEstado === "Para validar") {
@@ -73,49 +79,44 @@ export function segSeguimiento({ period = "7d", vendedor = "", sucursal = "" }) 
   if (sucursal) base = base.filter((c) => c.sucursal === sucursal);
   const cutoff = cutoffFor(period);
 
+  const inPeriod = (fecha) => !cutoff || (fecha && fecha >= cutoff);
+
   const map = new Map();
-  let totals = { validados: 0, pendientes: 0, paraValidar: 0, omitir: 0 };
+  let totals = { validados: 0, completadas: 0, trabajo: 0, pendientes: 0, paraValidar: 0, omitir: 0 };
   for (const c of base) {
     if (!map.has(c.vendedor))
       map.set(c.vendedor, {
         vendedor: c.vendedor,
         sucursal: c.sucursal,
         validados: 0,
-        validadosTotal: 0,
+        completadas: 0,
+        trabajo: 0,
         pendientes: 0,
         paraValidar: 0,
         omitir: 0,
-        segSum: 0,
-        segN: 0,
       });
     const row = map.get(c.vendedor);
     if (c.segEstado === "Validación aprobada") {
-      row.validadosTotal++;
-      if (!cutoff || (c.fechaVal && c.fechaVal >= cutoff)) {
-        row.validados++;
-        totals.validados++;
-      }
+      if (inPeriod(c.fechaVal)) { row.validados++; totals.validados++; }
+      if (inPeriod(c.fechaCompletado)) { row.completadas++; totals.completadas++; }
     } else if (c.segEstado === "Aprobación de gerencia") {
       row.pendientes++;
       totals.pendientes++;
+      if (inPeriod(c.fechaCompletado)) { row.completadas++; totals.completadas++; }
     } else if (c.segEstado === "Para validar") {
       row.paraValidar++;
       totals.paraValidar++;
-      row.segSum += ptsParaValidar(c.diasEstado || 0).pts;
-      row.segN++;
     } else if (c.segEstado === "Omitir validación") {
       row.omitir++;
       totals.omitir++;
     }
   }
+  for (const r of map.values()) r.trabajo = r.completadas + r.validados;
+  totals.trabajo = totals.completadas + totals.validados;
 
   const porVendedor = [...map.values()]
-    .filter((r) => r.validados > 0 || r.pendientes > 0 || r.segN > 0)
-    .map((r) => ({
-      ...r,
-      segScore: r.segN ? +(r.segSum / r.segN).toFixed(1) : null,
-    }))
-    .sort((a, b) => (b.segScore ?? -1) - (a.segScore ?? -1) || b.validados - a.validados);
+    .filter((r) => r.trabajo > 0 || r.pendientes > 0)
+    .sort((a, b) => b.trabajo - a.trabajo || b.validados - a.validados);
 
   return { period, totals, porVendedor };
 }
