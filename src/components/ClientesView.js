@@ -77,6 +77,19 @@ export default function ClientesView({
     const next = { ...segOverrides, [c.id]: "Validación aprobada" };
     setSegOverrides(next);
     localStorage.setItem("segOverrides", JSON.stringify(next));
+    // Log para el indicador de seguimiento (cuenta como validado hoy)
+    try {
+      const log = JSON.parse(localStorage.getItem("segAprobaciones") || "[]");
+      if (!log.some((a) => a.id === c.id)) {
+        log.push({
+          id: c.id,
+          vendedor: c.vendedor,
+          sucursal: c.sucursal,
+          fecha: new Date().toISOString().slice(0, 10),
+        });
+        localStorage.setItem("segAprobaciones", JSON.stringify(log));
+      }
+    } catch (e) {}
     showToast(`Segmentación aprobada · ${c.nombre}`);
     setSel(null);
   }
@@ -111,8 +124,8 @@ export default function ClientesView({
     <div>
       <div className="row-between">
         <div>
-          <h2>{title}</h2>
-          <p className="sub">{sub}</p>
+          {title ? <h2>{title}</h2> : null}
+          {sub ? <p className="sub">{sub}</p> : null}
         </div>
         {mode === "seg" && acciones.length >= 0 && (
           <div className="muted" style={{ fontSize: 12 }}>

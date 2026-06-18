@@ -12,14 +12,89 @@ function segBucket(c) {
   return c.revisado === "Revisado" ? "Aprobación de gerencia" : "Para validar";
 }
 
+// Hash determinístico del id → 0..(span-1)
+function hashSpan(id, span) {
+  let h = 0;
+  const s = String(id);
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  return h % span;
+}
+
 export function getClientes() {
   if (_cache) return _cache;
   const file = path.join(process.cwd(), "data", "clientes.json");
   const raw = fs.readFileSync(file, "utf-8");
   const list = JSON.parse(raw);
-  for (const c of list) c.segEstado = segBucket(c);
+  for (const c of list) {
+    c.segEstado = segBucket(c);
+    // Fecha de validación MOCK: las aprobadas se distribuyen en los últimos 90 días.
+    // (Reemplazar por la fecha real del ERP cuando exista la API de segmentación.)
+    if (c.segEstado === "Validación aprobada") {
+      const d = new Date();
+      d.setDate(d.getDate() - hashSpan(c.id, 90));
+      c.fechaVal = d.toISOString().slice(0, 10);
+    }
+  }
   _cache = list;
   return _cache;
+}
+
+function cutoffFor(period) {
+  const now = new Date();
+  if (period === "hoy") return now.toISOString().slice(0, 10);
+  if (period === "mes")
+    return new Date(now.getFullYear(), now.getMonth(), 1)
+      .toISOString()
+      .slice(0, 10);
+  const days = period === "7d" ? 7 : period === "14d" ? 14 : null;
+  if (days == null) return null; // "todo"
+  const d = new Date();
+  d.setDate(d.getDate() - days + 1);
+  return d.toISOString().slice(0, 10);
+}
+
+// Seguimiento de segmentación por vendedor, filtrable por período.
+export function segSeguimiento({ period = "7d", vendedor = "", sucursal = "" }) {
+  let base = getClientes();
+  if (vendedor) base = base.filter((c) => c.vendedor === vendedor);
+  if (sucursal) base = base.filter((c) => c.sucursal === sucursal);
+  const cutoff = cutoffFor(period);
+
+  const map = new Map();
+  let totals = { validados: 0, pendientes: 0, paraValidar: 0, omitir: 0 };
+  for (const c of base) {
+    if (!map.has(c.vendedor))
+      map.set(c.vendedor, {
+        vendedor: c.vendedor,
+        sucursal: c.sucursal,
+        validados: 0,
+        pendientes: 0,
+        paraValidar: 0,
+        omitir: 0,
+      });
+    const row = map.get(c.vendedor);
+    if (c.segEstado === "Validación aprobada") {
+      if (!cutoff || (c.fechaVal && c.fechaVal >= cutoff)) {
+        row.validados++;
+        totals.validados++;
+      }
+    } else if (c.segEstado === "Aprobación de gerencia") {
+      row.pendientes++;
+      totals.pendientes++;
+    } else if (c.segEstado === "Para validar") {
+      row.paraValidar++;
+      totals.paraValidar++;
+    } else if (c.segEstado === "Omitir validación") {
+      row.omitir++;
+      totals.omitir++;
+    }
+  }
+
+  const porVendedor = [...map.values()]
+    .filter((r) => r.validados > 0 || r.pendientes > 0)
+    .sort((a, b) => b.validados - a.validados || b.pendientes - a.pendientes);
+
+  return { period, totals, porVendedor };
 }
 
 // Lista de vendedores ordenada con su sucursal
