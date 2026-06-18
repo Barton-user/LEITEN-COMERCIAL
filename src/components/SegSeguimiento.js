@@ -9,9 +9,10 @@ const PERIODOS = [
   { id: "todo", label: "Todo" },
 ];
 
-function avanceColor(pct) {
-  if (pct >= 70) return "#22c55e";
-  if (pct >= 55) return "#f59e0b";
+function scoreColor(v) {
+  if (v == null) return "var(--muted)";
+  if (v >= 8) return "#22c55e";
+  if (v >= 6) return "#f59e0b";
   return "#ef4444";
 }
 
@@ -38,14 +39,14 @@ export default function SegSeguimiento({ vendedores }) {
         json.totals.pendientes = Math.max(0, json.totals.pendientes - n);
         let row = json.porVendedor.find((r) => r.vendedor === v);
         if (!row) {
-          row = { vendedor: v, sucursal: "", validados: 0, validadosTotal: 0, pendientes: 0, paraValidar: 0, omitir: 0 };
+          row = { vendedor: v, sucursal: "", validados: 0, validadosTotal: 0, pendientes: 0, paraValidar: 0, omitir: 0, segScore: null };
           json.porVendedor.push(row);
         }
         row.validados += n;
         row.validadosTotal += n;
         row.pendientes = Math.max(0, row.pendientes - n);
       }
-      json.porVendedor.sort((a, b) => b.validados - a.validados || b.pendientes - a.pendientes);
+      json.porVendedor.sort((a, b) => (b.segScore ?? -1) - (a.segScore ?? -1) || b.validados - a.validados);
     } catch (e) {}
 
     setData(json);
@@ -66,7 +67,7 @@ export default function SegSeguimiento({ vendedores }) {
         <div>
           <h3 style={{ fontSize: 15, marginBottom: 2 }}>Seguimiento de segmentación</h3>
           <span className="muted" style={{ fontSize: 12 }}>
-            Ranking de vendedores por validaciones en el período ·{" "}
+            Ranking por puntaje de segmentación (fichas “Para validar”) ·{" "}
             <b style={{ color: "#22c55e" }}>{t.validados.toLocaleString("es-AR")} validados</b>{" "}
             ({periodLabel})
           </span>
@@ -107,14 +108,13 @@ export default function SegSeguimiento({ vendedores }) {
               <th>Vendedor</th>
               <th className="num">Val.</th>
               <th className="num">Pend.</th>
-              <th style={{ width: 200 }}>Avance de cartera</th>
+              <th style={{ width: 230 }}>Puntaje segmentación</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((r, idx) => {
-              const denom = r.validadosTotal + r.pendientes + r.paraValidar;
-              const pct = denom ? Math.round((r.validadosTotal / denom) * 100) : 0;
-              const col = avanceColor(pct);
+              const score = r.segScore;
+              const col = scoreColor(score);
               return (
                 <tr key={r.vendedor} className={idx === 0 ? "lb-top" : ""}>
                   <td style={{ fontWeight: 700, color: idx === 0 ? "#22c55e" : "var(--muted)" }}>
@@ -131,9 +131,14 @@ export default function SegSeguimiento({ vendedores }) {
                   <td>
                     <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                       <div className="bartrack" style={{ flex: 1, height: 8 }}>
-                        <div className="barfill" style={{ width: `${pct}%`, background: col }} />
+                        <div
+                          className="barfill"
+                          style={{ width: `${((score ?? 0) / 10) * 100}%`, background: col }}
+                        />
                       </div>
-                      <span className="muted" style={{ fontSize: 11.5, width: 34, textAlign: "right" }}>{pct}%</span>
+                      <span style={{ fontWeight: 700, fontSize: 13, color: col, width: 30, textAlign: "right" }}>
+                        {score != null ? score.toFixed(1) : "—"}
+                      </span>
                     </div>
                   </td>
                 </tr>
@@ -158,7 +163,7 @@ export default function SegSeguimiento({ vendedores }) {
         </table>
       )}
       <div className="muted" style={{ fontSize: 11, marginTop: 12 }}>
-        “Avance de cartera” = fichas validadas sobre el total a gestionar del vendedor. Las fechas de validación son mock hasta conectar la API del ERP; las aprobaciones que hagas en la app cuentan como validadas hoy.
+        “Puntaje segmentación” = promedio de la antigüedad de las fichas “Para validar” del vendedor (≤7d=10 · ≤15d=8 · ≤60d=5 · +60d=2), el mismo de la pantalla Puntuación. Las fechas son mock hasta conectar la API del ERP; las aprobaciones que hagas en la app cuentan como validadas hoy.
       </div>
     </div>
   );

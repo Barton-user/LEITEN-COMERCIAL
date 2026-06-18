@@ -85,6 +85,8 @@ export function segSeguimiento({ period = "7d", vendedor = "", sucursal = "" }) 
         pendientes: 0,
         paraValidar: 0,
         omitir: 0,
+        segSum: 0,
+        segN: 0,
       });
     const row = map.get(c.vendedor);
     if (c.segEstado === "Validación aprobada") {
@@ -99,6 +101,8 @@ export function segSeguimiento({ period = "7d", vendedor = "", sucursal = "" }) 
     } else if (c.segEstado === "Para validar") {
       row.paraValidar++;
       totals.paraValidar++;
+      row.segSum += ptsParaValidar(c.diasEstado || 0).pts;
+      row.segN++;
     } else if (c.segEstado === "Omitir validación") {
       row.omitir++;
       totals.omitir++;
@@ -106,8 +110,12 @@ export function segSeguimiento({ period = "7d", vendedor = "", sucursal = "" }) 
   }
 
   const porVendedor = [...map.values()]
-    .filter((r) => r.validados > 0 || r.pendientes > 0)
-    .sort((a, b) => b.validados - a.validados || b.pendientes - a.pendientes);
+    .filter((r) => r.validados > 0 || r.pendientes > 0 || r.segN > 0)
+    .map((r) => ({
+      ...r,
+      segScore: r.segN ? +(r.segSum / r.segN).toFixed(1) : null,
+    }))
+    .sort((a, b) => (b.segScore ?? -1) - (a.segScore ?? -1) || b.validados - a.validados);
 
   return { period, totals, porVendedor };
 }
